@@ -372,6 +372,18 @@
 - 알림점(x30,y214,10x10)/알림개수(x10,y226,50x14) 실제 겹침 여부 검증: `UNREAD_NOTIFICATION_COUNT` 조건을 임시로 `1>0`(항상 참)으로, 값 파라미터를 임시로 `3`으로 강제 설정해 빌드·설치 후 확대 캡처로 확인 → 점과 숫자가 겹치지 않고 위아래로 명확히 분리되어 표시됨 확인, 검증 후 원래 바인딩(`[UNREAD_NOTIFICATION_COUNT]`)으로 즉시 원복
 - 빌드/재설치(Favorite Id 45=강제표시 테스트, 46=최종 원복본) 완료, 인터랙티브+AOD 재검증 완료(강수확률 3요소 간격 정상, 알림점/개수 정상 동작 확인, 그 외 요소 전부 불변)
 
+## WFF Validator 메모리 재검증 (2026-08-29, 폰트 임베딩 이후)
+- 배경: 15단계(2026-08-27) 검증 이후 커스텀 폰트 임베딩(+4.8MB 우려, "폰트 임베딩+알약 아이콘 이미지화" 로그 참조) 등 리소스 변경이 누적돼 재검증 필요
+- google/watchface 리포 재클론 후 메모리 검증 도구 재빌드 — **경로 정정**: 15단계 로그의 "third_party/wff"는 부정확한 표기였고, 실제 메모리 계산 도구는 `play-validations/memory-footprint` 모듈(`./gradlew :memory-footprint:executable-jar`)임을 확인
+- 원본 watchface.xml은 validator가 `verticalAlign`(Text, 46곳) / `isAutoSize`(Text, 3곳) / `minSize`(Font, 3곳) 3개 속성에서 SEVERE 파싱 실패로 막혀 메모리 계산 자체가 진행 불가 — 앞 2개는 CLAUDE.md 3-1에 이미 기록된 기존 known gap(v2 XSD 미지원이나 실기기 정상 렌더 확인됨), `minSize`(오토사이즈 기능의 부속 속성, isAutoSize와 항상 동반 사용됨)는 이번에 처음 확인된 동일 계열 항목
+- 측정 목적으로 위 3개 속성만 제거한 임시 사본 APK로 재실행(실제 배포용 watchface.xml은 미변경) → 정상 파싱 및 계산 성공
+- **실측 결과(CLAUDE.md 3-2 기준 대비)**:
+  - 인터랙티브(active) 모드: **7.90 MB** / 100MB 한도 — 여유 92.1MB, **통과**
+  - AOD(ambient) 모드: **2.34 MB** / 10MB 한도 — 여유 7.66MB, **통과**(우려했던 폰트 추가분 포함해도 초과 없음)
+  - 최대 사용 리소스: notosanskr_bold/regular 폰트 각 2.34MB, 배경 day/night 각 0.73MB, 날씨아이콘 32종 각 0.04~0.06MB
+- 신규 오류: 없음(위 3개 known-gap류 외 추가 SEVERE 없음)
+- PROGRESS.md 11번은 기존 [x] 유지(15단계에서 이미 검증 통과했던 항목, 이번은 폰트 임베딩 이후 수치 갱신 목적의 재확인)
+
 ## 이슈/보류 메모
 - 스트레스 지수: 구현 시도 결과 → (성공/실패 기록)
 - 폰배터리 슬롯(SLOT_MID_LEFT): 사용자 앱 지정 테스트 결과 →
