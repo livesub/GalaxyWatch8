@@ -185,7 +185,7 @@
 - targetSdk/compileSdk: 재빌드 시점마다 최신 버전으로 갱신(현재 36 제안), minSdk는 유지
 - versionCode 1 / versionName "1.0" (시작값, "1.0.0" 아님)
 - keystore(서명): 지금 정할 필요 없음 — 실제 빌드 단계에서 생성
-- 런처 아이콘(워치페이스 목록 썸네일): `watchface/src/main/res/drawable/preview.png`(래스터, 에뮬레이터 실사용화면 캡처 438x438) — 22단계에서 완료. 기존 벡터(`preview.xml`, 초기 스캐폴드 아날로그 목업)는 SysUI 편집화면 크래시(VectorDrawable→BitmapDrawable 캐스팅 실패) 원인이라 삭제됨
+- 런처 아이콘(워치페이스 목록 썸네일): 완료 — 22단계로 fast-track 처리됨, `watchface/src/main/res/drawable/preview.png`(실제 워치페이스 캡처, 래스터) + `watch_face_info.xml`의 `<Preview value="@drawable/preview" />` 등록 완료
 
 ## 9. 미확정/보류 항목
 - 날씨 아이콘 32종 전부 매핑 완료(예비 없음, `docs/weather_icons.md` 참조) — 단 FOG/MIST/LIGHT_SNOW/UNKNOWN 4개 코드는 원래 컨셉과 다른 그림을 근사치로 재배정한 것이라 실제 렌더 확인 시 어색하면 재조정 가능
