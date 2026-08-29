@@ -398,6 +398,31 @@
   - squash 과정에서 `docs/개발_지시서.md`에 이미 추가돼 있던 미커밋 신규 섹션(21-16-2단계, 콤플리케이션/데이터바인딩 점검 지시)은 무관한 별개 작업이라 스테이징에서 제외, working tree에 그대로 보존
 - CLAUDE.md 5-2 좌표표 재검증: 알약 3종 행(65/171/277, 96×44, 정렬 방식)은 실제 watchface.xml 구현값과 100% 일치, 반올림/수정 불필요
 - **정합성 버그 발견 및 수정**: 5번 항목 14/15(하단 알약2/3)에 13번 항목이 "동일 96×44 통일"로 이미 갱신된 후에도 예전 차등폭 표현("폭 대(large)"/"폭 소(small)")이 그대로 남아있던 것 확인 → "알약1/3과 동일(96px)"/"알약1/2와 동일(96px)"로 정정, 13/14/15번 표현 정합성 확보
+
+## 21-16-2단계: 콤플리케이션/데이터 바인딩 전수 점검 (2026-08-29, 점검만·수정 없음)
+- **1. 콤플리케이션 4개 슬롯 사용자 변경 가능 여부**: XML 설정(isCustomizable=TRUE, supportedTypes, DefaultProviderPolicy, BoundingOval) 4개 슬롯 전부 정상(watchface.xml:443-634). AndroidManifest.xml도 표준 WFF v2 선언으로 이상 없음
+  - **차단 요인 발견**: `watchface/src/main/res/xml/watch_face_info.xml:7`에 `<Editable value="false" />` — 에뮬레이터에서 실제 long-press(swipe 1000ms)와 콤플리케이션 직접 tap 둘 다 시도했으나 편집/피커 화면이 전혀 열리지 않음(스크린샷으로 확인, 시계는 정상 표시된 채 그대로). Editable=false가 원인일 개연성 높으나 100% 인과관계 확정은 아님(에뮬레이터 터치인식 한계 가능성 배제 못함) — **수정 금지 지시라 값은 그대로 둠, true로 바꿔 재검증하거나 실기기 확인 필요**
+- **2. 하드코딩 여부 점검(전부 실제 표현식 확인, 하드코딩 없음)**:
+  | 요소 | 표현식 | 위치(줄) |
+  |---|---|---|
+  | 현재온도 | `[WEATHER.TEMPERATURE]`(+화씨분기) | 198,210 |
+  | 날씨아이콘 | `[WEATHER.IS_DAY]`+`[WEATHER.CONDITION]` c1~c15 | 267,272-355 |
+  | 날씨코멘트 | `[WEATHER.CONDITION]` w1~w15 | 221-252 |
+  | 최고/최저 | `[WEATHER.DAYS.0.TEMPERATURE_LOW/HIGH]` | 85-99 |
+  | 강수확률 | `[WEATHER.DAYS.0.CHANCE_OF_PRECIPITATION]` | 126 |
+  | 일출/일몰 | SLOT_SUNRISE/SUNSET `defaultSystemProvider="SUNRISE_SUNSET"`+`[COMPLICATION.TEXT]` | 133-182 |
+  | 워치배터리 | `[BATTERY_PERCENT]` | 870 |
+  | 걸음수 | `[STEP_COUNT]` | 899-938 |
+  | 심박수 | `[HEART_RATE]` | 971 |
+  | 알림점/개수 | `[UNREAD_NOTIFICATION_COUNT]` | 39,49,62 |
+  | 날짜 | `[YEAR]/[MONTH]/[DAY]` | 643-646 |
+  | 요일 | `[DAY_OF_WEEK]` | 657-662 |
+  | 시간/오전오후 | `TimeText hourFormat="12"`+`[AMPM_STATE]` | 729,769-819 |
+  - 타임존: WFF 표준 토큰(TimeText/YEAR/MONTH/DAY 등)은 OS가 기기 타임존 기준으로 자동 계산 — XML에 별도 설정 불필요(플랫폼 표준 동작), 코드로는 이 이상 확인 불가
+- **3. 실기기 없이는 확인 불가능한 항목**: WEATHER.* 전체(온도/코멘트/최고최저/강수확률) 실제 수신값, SUNRISE_SUNSET 실제 시각, STEP_COUNT/HEART_RATE 실제 센서값 — 전부 에뮬레이터 GPS/센서 부재로 폴백값만 표시(CLAUDE.md 6-6 기존 한계와 동일). 콤플리케이션 4개 슬롯의 실제 앱 지정 동작도 위 Editable=false 이슈로 이번엔 재확인 불가
+- **4. 문제 있는 항목 요약**: `watchface/src/main/res/xml/watch_face_info.xml:7`(`Editable="false"`) 외에는 하드코딩/바인딩 결함 없음
+
+## 이슈/보류 메모
 - 스트레스 지수: 구현 시도 결과 → (성공/실패 기록)
 - 폰배터리 슬롯(SLOT_MID_LEFT): 사용자 앱 지정 테스트 결과 →
 - 온도 섭씨 강제: 구현 가능 여부 →
