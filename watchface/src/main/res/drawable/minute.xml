@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Minute hand shape: longer and slightly thinner than the hour hand. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="220dp"
+    android:viewportWidth="16"
+    android:viewportHeight="220">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M6,0 L10,0 L14,220 L2,220 Z" />
+</vector>

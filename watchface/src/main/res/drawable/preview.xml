@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static preview icon shown in the watch face picker. Mirrors the layout
+     of res/raw/watchface.xml (dial, ticks, hour/minute hands) at a fixed time. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="450"
+    android:viewportHeight="450">
+
+    <path android:fillColor="#000000"
+        android:pathData="M0,0 L450,0 L450,450 L0,450 Z" />
+
+    <path android:fillColor="#1A1A1A"
+        android:pathData="M225,25 A200,200 0 1,1 224.999,25 Z" />
+
+    <path android:fillColor="#CCCCCC"
+        android:pathData="M219,35 L231,35 L231,65 L219,65 Z" />
+    <path android:fillColor="#CCCCCC"
+        android:pathData="M415,219 L415,231 L385,231 L385,219 Z" />
+    <path android:fillColor="#CCCCCC"
+        android:pathData="M219,415 L231,415 L231,385 L219,385 Z" />
+    <path android:fillColor="#CCCCCC"
+        android:pathData="M35,219 L35,231 L65,231 L65,219 Z" />
+
+    <!-- Hour hand pointing toward 10 -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M225,225 L165,120 L180,110 L245,210 Z" />
+
+    <!-- Minute hand pointing toward 2 -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M225,225 L330,155 L338,168 L235,235 Z" />
+
+    <path android:fillColor="#FF5252"
+        android:pathData="M225,225 L225,60 L221,60 L221,225 Z" />
+
+    <path android:fillColor="#0A0A0A"
+        android:pathData="M225,215 A10,10 0 1,1 224.99,215 Z" />
+</vector>

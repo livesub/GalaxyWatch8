@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- hasCode must be false: Watch Face Format watch faces ship no compiled code,
+         only the declarative XML under res/raw and the resources it references. -->
+    <application
+        android:label="@string/watch_face_name"
+        android:icon="@drawable/preview"
+        android:hasCode="false">
+
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.google.android.wearable.watchface.preview"
+            android:resource="@drawable/preview" />
+
+        <meta-data
+            android:name="com.google.android.wearable.watchface.preview_circular"
+            android:resource="@drawable/preview" />
+
+        <meta-data
+            android:name="com.google.android.wearable.watchface.info"
+            android:resource="@xml/watch_face_info" />
+
+        <property
+            android:name="com.google.wear.watchface.format.version"
+            android:value="2" />
+
+    </application>
+</manifest>

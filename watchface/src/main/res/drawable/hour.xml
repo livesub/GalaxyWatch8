@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hour hand shape. Filled solid white so the WatchFace.xml "tintColor"
+     attribute on <HourHand> can recolor it per theme / ambient mode. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="190dp"
+    android:viewportWidth="20"
+    android:viewportHeight="190">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M8,0 L12,0 L18,190 L2,190 Z" />
+</vector>

@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Galaxy Watch8 Classic watch face (Watch Face Format).
+    438x438 coordinate space (device native resolution).
+    21-1단계: CLAUDE.md 5-2 정확 좌표 스펙표(demo.html 실측) 기준으로 전 요소 x/y/width/height 재적용.
+-->
+<WatchFace width="438" height="438">
+    <Metadata key="CLOCK_TYPE" value="DIGITAL" />
+    <Metadata key="PREVIEW_TIME" value="17:10:37" />
+
+    <Scene backgroundColor="#000000">
+
+        <!-- 배경 (주간/야간 2종, 원형 크롭 완료 이미지, 다른 요소보다 먼저 그려 맨 뒤에 위치). AOD에선 숨김(5-1) -->
+        <Group name="group_1" x="0" y="0" width="438" height="438">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Condition>
+                <Expressions>
+                    <Expression name="is_day"><![CDATA[[WEATHER.IS_DAY]]]></Expression>
+                </Expressions>
+                <Compare expression="is_day">
+                    <PartImage x="0" y="0" width="438" height="438">
+                        <Image resource="bg_day" />
+                    </PartImage>
+                </Compare>
+                <Default>
+                    <PartImage x="0" y="0" width="438" height="438">
+                        <Image resource="bg_night" />
+                    </PartImage>
+                </Default>
+            </Condition>
+        </Group>
+
+        <!-- 좌측 원 바깥 세로중앙: 안읽은 알림 점(dot, x30 y214 10x10) + 알림 개수(x10 y226 50x14).
+             점/개수 둘 다 UNREAD_NOTIFICATION_COUNT 동일 조건으로 표시/숨김 동기화. AOD에선 숨김(5-1) -->
+        <Group name="group_28" x="0" y="0" width="438" height="438">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Condition>
+                <Expressions>
+                    <Expression name="has_unread"><![CDATA[[UNREAD_NOTIFICATION_COUNT] > 0]]></Expression>
+                </Expressions>
+                <Compare expression="has_unread">
+                    <PartDraw x="30" y="214" width="10" height="10">
+                        <Ellipse x="0" y="0" width="10" height="10"><Fill color="#FFA726" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="10" y="226" width="50" height="14">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="11" weight="BOLD" color="#FFFFFF">
+                                <Outline color="#B3000000" width="1" />
+                                <Template><![CDATA[%d]]><Parameter expression="[UNREAD_NOTIFICATION_COUNT]" /></Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Compare>
+                <Default>
+                    <PartDraw x="30" y="214" width="10" height="10" alpha="0">
+                        <Ellipse x="0" y="0" width="10" height="10"><Fill color="#FFA726" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="10" y="226" width="50" height="14" alpha="0">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="11" weight="BOLD" color="#FFFFFF">
+                                <Outline color="#B3000000" width="1" />
+                                <Template><![CDATA[%d]]><Parameter expression="[UNREAD_NOTIFICATION_COUNT]" /></Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Default>
+            </Condition>
+        </Group>
+
+        <!-- 신규: 오늘 최저/최고 기온. x0,y28,438x17, 가로/세로 중앙정렬, 민트+다크아웃라인(6-1 하단알약 계열).
+             WEATHER.DAYS.0(오늘) 예보, TEMPERATURE_UNIT으로 화씨섭씨 변환(기존 현재온도 블록과 동일 규칙).
+             기존 현재온도 블록과 동일하게 데이터 미수신 시 0으로 표시(대시 오버라이드 없음). AOD에선 숨김(5-1) -->
+        <Group name="group_daytemp" x="0" y="0" width="438" height="438">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Condition>
+                <Expressions>
+                    <Expression name="is_fahrenheit"><![CDATA[[WEATHER.TEMPERATURE_UNIT] == 2]]></Expression>
+                </Expressions>
+                <Compare expression="is_fahrenheit">
+                    <PartText x="0" y="28" width="438" height="17">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="15" weight="BOLD" color="#C9F7DC">
+                                <Outline color="#B3000000" width="1.2" />
+                                <Template><![CDATA[최저 %.0f°  ·  최고 %.0f°]]>
+                                    <Parameter expression="([WEATHER.DAYS.0.TEMPERATURE_LOW]-32)*5/9" />
+                                    <Parameter expression="([WEATHER.DAYS.0.TEMPERATURE_HIGH]-32)*5/9" />
+                                </Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Compare>
+                <Default>
+                    <PartText x="0" y="28" width="438" height="17">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="15" weight="BOLD" color="#C9F7DC">
+                                <Outline color="#B3000000" width="1.2" />
+                                <Template><![CDATA[최저 %.0f°  ·  최고 %.0f°]]>
+                                    <Parameter expression="[WEATHER.DAYS.0.TEMPERATURE_LOW]" />
+                                    <Parameter expression="[WEATHER.DAYS.0.TEMPERATURE_HIGH]" />
+                                </Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Default>
+            </Condition>
+        </Group>
+
+        <!-- 신규: 강수확률(우측 여백). 라벨(x374 y194 60x14)+아이콘(x387 y198 34x31)+값(x374 y224 60x16).
+             WEATHER.DAYS.0.CHANCE_OF_PRECIPITATION(공식 필드, DAYS 배열 하위). 기존 온도 블록과 동일하게
+             데이터 미수신 시 0%로 표시. AOD에선 숨김(5-1) -->
+        <Group name="group_precip" x="0" y="0" width="438" height="438">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <PartText x="374" y="186" width="60" height="14">
+                <Text align="CENTER" verticalAlign="CENTER">
+                    <Font family="notosanskr_bold" size="11" weight="BOLD" color="#C9F7DC">
+                        <Outline color="#B3000000" width="1" />강수확률</Font>
+                </Text>
+            </PartText>
+            <PartImage x="387" y="203" width="34" height="31">
+                <Image resource="rain_umbrella" />
+            </PartImage>
+            <PartText x="374" y="237" width="60" height="16">
+                <Text align="CENTER" verticalAlign="CENTER">
+                    <Font family="notosanskr_bold" size="13" weight="BOLD" color="#4FC3F7">
+                        <Outline color="#B3000000" width="1.2" />
+                        <Template><![CDATA[%.0f%%]]><Parameter expression="[WEATHER.DAYS.0.CHANCE_OF_PRECIPITATION]" /></Template>
+                    </Font>
+                </Text>
+            </PartText>
+        </Group>
+
+        <!-- 좌상단: 일출, SUNRISE_SUNSET 시스템 콤플리케이션. 5-2 좌표표: x71,y58,82x57(라벨26+값26,gap5). isCustomizable=FALSE로 잠금 -->
+        <ComplicationSlot x="71" y="58" width="82" height="57" slotId="6" name="SLOT_SUNRISE"
+            displayName="일출" supportedTypes="SHORT_TEXT" isCustomizable="FALSE">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <BoundingBox x="0" y="0" width="82" height="57" />
+            <DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET" defaultSystemProviderType="SHORT_TEXT" />
+            <Complication type="SHORT_TEXT">
+                <Group name="group_3" x="0" y="0" width="82" height="57">
+                    <PartText x="0" y="0" width="82" height="26">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="16" weight="BOLD" color="#FFB199">
+                                <Outline color="#B3000000" width="1.2" />일출</Font>
+                        </Text>
+                    </PartText>
+                    <PartText x="0" y="31" width="82" height="26">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="21" weight="BOLD" color="#FFFFFF">
+                                <Outline color="#B3000000" width="1.5" />
+                                <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- 우상단: 일몰, SUNRISE_SUNSET 시스템 콤플리케이션. 5-2 좌표표: x285,y58,82x57. isCustomizable=FALSE로 잠금 -->
+        <ComplicationSlot x="285" y="58" width="82" height="57" slotId="5" name="SLOT_SUNSET"
+            displayName="일몰" supportedTypes="SHORT_TEXT" isCustomizable="FALSE">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <BoundingBox x="0" y="0" width="82" height="57" />
+            <DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET" defaultSystemProviderType="SHORT_TEXT" />
+            <Complication type="SHORT_TEXT">
+                <Group name="group_2" x="0" y="0" width="82" height="57">
+                    <PartText x="0" y="0" width="82" height="26">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="16" weight="BOLD" color="#C97B5F">
+                                <Outline color="#B3000000" width="1.2" />일몰</Font>
+                        </Text>
+                    </PartText>
+                    <PartText x="0" y="31" width="82" height="26">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="21" weight="BOLD" color="#FFFFFF">
+                                <Outline color="#B3000000" width="1.5" />
+                                <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- 온도(1행, x167 y55 104x31) + 날씨 코멘트(2행, x167 y93 104x18). 5-2 좌표표 반영.
+             WEATHER.TEMPERATURE_UNIT 기준 섭씨 강제 변환. AOD에선 숨김(5-1) -->
+        <Group name="group_4" x="0" y="0" width="438" height="438">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Condition>
+                <Expressions>
+                    <Expression name="is_fahrenheit"><![CDATA[[WEATHER.TEMPERATURE_UNIT] == 2]]></Expression>
+                </Expressions>
+                <Compare expression="is_fahrenheit">
+                    <PartText x="167" y="55" width="104" height="31">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
+                                <Outline color="#B3000000" width="1.5" />
+                                <Template><![CDATA[%.0f°C]]>
+                                    <Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" />
+                                </Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Compare>
+                <Default>
+                    <PartText x="167" y="55" width="104" height="31">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
+                                <Outline color="#B3000000" width="1.5" />
+                                <Template><![CDATA[%.0f°C]]>
+                                    <Parameter expression="[WEATHER.TEMPERATURE]" />
+                                </Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Default>
+            </Condition>
+
+            <!-- 날씨 조건 한글 코멘트(2행), WEATHER.CONDITION 0~15 전부 매핑(docs/weather_icons.md 참조) -->
+            <Condition>
+                <Expressions>
+                    <Expression name="w1"><![CDATA[[WEATHER.CONDITION] == 1]]></Expression>
+                    <Expression name="w2"><![CDATA[[WEATHER.CONDITION] == 2]]></Expression>
+                    <Expression name="w3"><![CDATA[[WEATHER.CONDITION] == 3]]></Expression>
+                    <Expression name="w4"><![CDATA[[WEATHER.CONDITION] == 4]]></Expression>
+                    <Expression name="w5"><![CDATA[[WEATHER.CONDITION] == 5]]></Expression>
+                    <Expression name="w6"><![CDATA[[WEATHER.CONDITION] == 6]]></Expression>
+                    <Expression name="w7"><![CDATA[[WEATHER.CONDITION] == 7]]></Expression>
+                    <Expression name="w8"><![CDATA[[WEATHER.CONDITION] == 8]]></Expression>
+                    <Expression name="w9"><![CDATA[[WEATHER.CONDITION] == 9]]></Expression>
+                    <Expression name="w10"><![CDATA[[WEATHER.CONDITION] == 10]]></Expression>
+                    <Expression name="w11"><![CDATA[[WEATHER.CONDITION] == 11]]></Expression>
+                    <Expression name="w12"><![CDATA[[WEATHER.CONDITION] == 12]]></Expression>
+                    <Expression name="w13"><![CDATA[[WEATHER.CONDITION] == 13]]></Expression>
+                    <Expression name="w14"><![CDATA[[WEATHER.CONDITION] == 14]]></Expression>
+                    <Expression name="w15"><![CDATA[[WEATHER.CONDITION] == 15]]></Expression>
+                </Expressions>
+                <Compare expression="w1"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />맑음</Font></Text></PartText></Compare>
+                <Compare expression="w2"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />흐림</Font></Text></PartText></Compare>
+                <Compare expression="w3"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />안개</Font></Text></PartText></Compare>
+                <Compare expression="w4"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />폭우</Font></Text></PartText></Compare>
+                <Compare expression="w5"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />폭설</Font></Text></PartText></Compare>
+                <Compare expression="w6"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />비</Font></Text></PartText></Compare>
+                <Compare expression="w7"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />눈</Font></Text></PartText></Compare>
+                <Compare expression="w8"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />화창함</Font></Text></PartText></Compare>
+                <Compare expression="w9"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />천둥번개</Font></Text></PartText></Compare>
+                <Compare expression="w10"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />진눈깨비</Font></Text></PartText></Compare>
+                <Compare expression="w11"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />가끔 눈</Font></Text></PartText></Compare>
+                <Compare expression="w12"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />가끔 비</Font></Text></PartText></Compare>
+                <Compare expression="w13"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />옅은 안개</Font></Text></PartText></Compare>
+                <Compare expression="w14"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />대체로 흐림</Font></Text></PartText></Compare>
+                <Compare expression="w15"><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />바람 강함</Font></Text></PartText></Compare>
+                <Default><PartText x="167" y="93" width="104" height="18"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="17" weight="BOLD" color="#FFFFFF"><Outline color="#B3000000" width="1.2" />정보 없음</Font></Text></PartText></Default>
+            </Condition>
+        </Group>
+
+        <!-- 날씨 캐릭터 아이콘. 고정 박스(x=0,y=121,width=438,height=105 — CLAUDE.md 5-2 원 스펙값으로 복귀,
+             날짜행을 21-10에서 아래로 옮긴 만큼 간격 9px 안팎으로 축소하기 위해 90→105로 재확대)
+             안에 32종 전부 동일한 "박스에 맞춰 축소" 공식으로 배치: WFF Image에는 object-fit:contain 같은 자동맞춤 속성이
+             없어(공식 문서 확인, resource 속성만 존재) 이미지별 개별 판단 대신 height=105(박스 높이) 고정 + width는
+             원본 비율(scale=105/원본높이)로 산출한 값을 전부 동일 규칙으로 대입 → 어떤 비율의 이미지든 세로는 박스에 꽉 차고
+             가로는 박스 중앙(x=219)에 정렬되어 박스를 벗어나지 않음. WEATHER.IS_DAY + WEATHER.CONDITION 분기,
+             docs/weather_icons.md 매핑표 기준(32종 1:1, 병합 없음). AOD에선 숨김(5-1) -->
+        <Group name="group_5" x="0" y="0" width="438" height="438">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <Condition>
+            <Expressions>
+                <Expression name="is_day"><![CDATA[[WEATHER.IS_DAY]]]></Expression>
+            </Expressions>
+            <Compare expression="is_day">
+                <Condition>
+                    <Expressions>
+                        <Expression name="c1"><![CDATA[[WEATHER.CONDITION] == 1]]></Expression>
+                        <Expression name="c2"><![CDATA[[WEATHER.CONDITION] == 2]]></Expression>
+                        <Expression name="c3"><![CDATA[[WEATHER.CONDITION] == 3]]></Expression>
+                        <Expression name="c4"><![CDATA[[WEATHER.CONDITION] == 4]]></Expression>
+                        <Expression name="c5"><![CDATA[[WEATHER.CONDITION] == 5]]></Expression>
+                        <Expression name="c6"><![CDATA[[WEATHER.CONDITION] == 6]]></Expression>
+                        <Expression name="c7"><![CDATA[[WEATHER.CONDITION] == 7]]></Expression>
+                        <Expression name="c8"><![CDATA[[WEATHER.CONDITION] == 8]]></Expression>
+                        <Expression name="c9"><![CDATA[[WEATHER.CONDITION] == 9]]></Expression>
+                        <Expression name="c10"><![CDATA[[WEATHER.CONDITION] == 10]]></Expression>
+                        <Expression name="c11"><![CDATA[[WEATHER.CONDITION] == 11]]></Expression>
+                        <Expression name="c12"><![CDATA[[WEATHER.CONDITION] == 12]]></Expression>
+                        <Expression name="c13"><![CDATA[[WEATHER.CONDITION] == 13]]></Expression>
+                        <Expression name="c14"><![CDATA[[WEATHER.CONDITION] == 14]]></Expression>
+                        <Expression name="c15"><![CDATA[[WEATHER.CONDITION] == 15]]></Expression>
+                    </Expressions>
+                    <Compare expression="c1">
+                        <PartImage x="167" y="121" width="104" height="105"><Image resource="day_01_clear_sun" /></PartImage>
+                    </Compare>
+                    <Compare expression="c2">
+                        <PartImage x="140" y="121" width="159" height="105"><Image resource="day_10_cloudy_plain" /></PartImage>
+                    </Compare>
+                    <Compare expression="c3">
+                        <PartImage x="141" y="121" width="157" height="105"><Image resource="day_14_cloud_dark_angry" /></PartImage>
+                    </Compare>
+                    <Compare expression="c4">
+                        <PartImage x="149" y="121" width="141" height="105"><Image resource="day_13_rain_crying" /></PartImage>
+                    </Compare>
+                    <Compare expression="c5">
+                        <PartImage x="178" y="121" width="82" height="105"><Image resource="day_16_snow_beanie_angry" /></PartImage>
+                    </Compare>
+                    <Compare expression="c6">
+                        <PartImage x="178" y="121" width="82" height="105"><Image resource="day_06_rain_beanie_sad" /></PartImage>
+                    </Compare>
+                    <Compare expression="c7">
+                        <PartImage x="179" y="121" width="80" height="105"><Image resource="day_08_snow_beanie_happy" /></PartImage>
+                    </Compare>
+                    <Compare expression="c8">
+                        <PartImage x="167" y="121" width="104" height="105"><Image resource="day_04_clear_sun_b" /></PartImage>
+                    </Compare>
+                    <Compare expression="c9">
+                        <PartImage x="168" y="121" width="103" height="105"><Image resource="day_09_thunderstorm" /></PartImage>
+                    </Compare>
+                    <Compare expression="c10">
+                        <PartImage x="165" y="121" width="108" height="105"><Image resource="day_07_snow_light" /></PartImage>
+                    </Compare>
+                    <Compare expression="c11">
+                        <PartImage x="147" y="121" width="144" height="105"><Image resource="day_12_wind_strong" /></PartImage>
+                    </Compare>
+                    <Compare expression="c12">
+                        <PartImage x="162" y="121" width="114" height="105"><Image resource="day_05_rain_light" /></PartImage>
+                    </Compare>
+                    <Compare expression="c13">
+                        <PartImage x="146" y="121" width="147" height="105"><Image resource="day_03_cloud_double" /></PartImage>
+                    </Compare>
+                    <Compare expression="c14">
+                        <PartImage x="155" y="121" width="128" height="105"><Image resource="day_02_partly_cloudy" /></PartImage>
+                    </Compare>
+                    <Compare expression="c15">
+                        <PartImage x="141" y="121" width="157" height="105"><Image resource="day_11_wind_light" /></PartImage>
+                    </Compare>
+                    <Default>
+                        <PartImage x="180" y="121" width="79" height="105"><Image resource="day_15_rain_beanie_happy" /></PartImage>
+                    </Default>
+                </Condition>
+            </Compare>
+            <Default>
+                <Condition>
+                    <Expressions>
+                        <Expression name="c1"><![CDATA[[WEATHER.CONDITION] == 1]]></Expression>
+                        <Expression name="c2"><![CDATA[[WEATHER.CONDITION] == 2]]></Expression>
+                        <Expression name="c3"><![CDATA[[WEATHER.CONDITION] == 3]]></Expression>
+                        <Expression name="c4"><![CDATA[[WEATHER.CONDITION] == 4]]></Expression>
+                        <Expression name="c5"><![CDATA[[WEATHER.CONDITION] == 5]]></Expression>
+                        <Expression name="c6"><![CDATA[[WEATHER.CONDITION] == 6]]></Expression>
+                        <Expression name="c7"><![CDATA[[WEATHER.CONDITION] == 7]]></Expression>
+                        <Expression name="c8"><![CDATA[[WEATHER.CONDITION] == 8]]></Expression>
+                        <Expression name="c9"><![CDATA[[WEATHER.CONDITION] == 9]]></Expression>
+                        <Expression name="c10"><![CDATA[[WEATHER.CONDITION] == 10]]></Expression>
+                        <Expression name="c11"><![CDATA[[WEATHER.CONDITION] == 11]]></Expression>
+                        <Expression name="c12"><![CDATA[[WEATHER.CONDITION] == 12]]></Expression>
+                        <Expression name="c13"><![CDATA[[WEATHER.CONDITION] == 13]]></Expression>
+                        <Expression name="c14"><![CDATA[[WEATHER.CONDITION] == 14]]></Expression>
+                        <Expression name="c15"><![CDATA[[WEATHER.CONDITION] == 15]]></Expression>
+                    </Expressions>
+                    <Compare expression="c1">
+                        <PartImage x="170" y="121" width="98" height="105"><Image resource="night_01_clear_moon" /></PartImage>
+                    </Compare>
+                    <Compare expression="c2">
+                        <PartImage x="143" y="121" width="152" height="105"><Image resource="night_10_cloud_plain2" /></PartImage>
+                    </Compare>
+                    <Compare expression="c3">
+                        <PartImage x="143" y="121" width="153" height="105"><Image resource="night_14_cloud_angry" /></PartImage>
+                    </Compare>
+                    <Compare expression="c4">
+                        <PartImage x="157" y="121" width="124" height="105"><Image resource="night_13_rain_crying" /></PartImage>
+                    </Compare>
+                    <Compare expression="c5">
+                        <PartImage x="171" y="121" width="96" height="105"><Image resource="night_16_snow_beanie_angry2" /></PartImage>
+                    </Compare>
+                    <Compare expression="c6">
+                        <PartImage x="164" y="121" width="110" height="105"><Image resource="night_06_rain_sad" /></PartImage>
+                    </Compare>
+                    <Compare expression="c7">
+                        <PartImage x="171" y="121" width="97" height="105"><Image resource="night_08_snow_beanie_angry" /></PartImage>
+                    </Compare>
+                    <Compare expression="c8">
+                        <PartImage x="163" y="121" width="112" height="105"><Image resource="night_04_stars_clear" /></PartImage>
+                    </Compare>
+                    <Compare expression="c9">
+                        <PartImage x="163" y="121" width="112" height="105"><Image resource="night_09_thunderstorm_angry" /></PartImage>
+                    </Compare>
+                    <Compare expression="c10">
+                        <PartImage x="158" y="121" width="122" height="105"><Image resource="night_07_snow_light" /></PartImage>
+                    </Compare>
+                    <Compare expression="c11">
+                        <PartImage x="158" y="121" width="123" height="105"><Image resource="night_12_wind_strong" /></PartImage>
+                    </Compare>
+                    <Compare expression="c12">
+                        <PartImage x="159" y="121" width="120" height="105"><Image resource="night_05_rain_light" /></PartImage>
+                    </Compare>
+                    <Compare expression="c13">
+                        <PartImage x="147" y="121" width="145" height="105"><Image resource="night_03_cloudy_plain" /></PartImage>
+                    </Compare>
+                    <Compare expression="c14">
+                        <PartImage x="164" y="121" width="111" height="105"><Image resource="night_02_partly_cloudy_moon" /></PartImage>
+                    </Compare>
+                    <Compare expression="c15">
+                        <PartImage x="146" y="121" width="147" height="105"><Image resource="night_11_wind_light" /></PartImage>
+                    </Compare>
+                    <Default>
+                        <PartImage x="164" y="121" width="111" height="105"><Image resource="night_15_rain_beanie_happy" /></PartImage>
+                    </Default>
+                </Condition>
+            </Default>
+        </Condition>
+        </Group>
+
+        <!-- 6~9번 4개 슬롯 미설정 플레이스홀더(다크 원+"+")를 ComplicationSlot과 무관하게 직접 그림.
+             App Shortcut류는 미설정 시 시스템이 EMPTY/NOT_CONFIGURED 어느 쪽도 요청하지 않아 화면에 아무것도
+             안 그려지는 경우가 확인되어, 슬롯 밑에 항상 그려두고 실제 콘텐츠가 위에 덮이도록 처리.
+             5-2 좌표표: 콤플리케이션 4개 52x52. AOD에선 슬롯과 함께 숨김 -->
+        <Group name="group_placeholder" x="0" y="0" width="438" height="438">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <PartDraw x="70" y="130" width="52" height="52">
+                <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+            </PartDraw>
+            <PartText x="70" y="130" width="52" height="52">
+                <Text align="CENTER"><Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font></Text>
+            </PartText>
+            <PartDraw x="316" y="130" width="52" height="52">
+                <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+            </PartDraw>
+            <PartText x="316" y="130" width="52" height="52">
+                <Text align="CENTER"><Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font></Text>
+            </PartText>
+            <PartDraw x="70" y="200" width="52" height="52">
+                <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+            </PartDraw>
+            <PartText x="70" y="200" width="52" height="52">
+                <Text align="CENTER"><Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font></Text>
+            </PartText>
+            <PartDraw x="316" y="200" width="52" height="52">
+                <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+            </PartDraw>
+            <PartText x="316" y="200" width="52" height="52">
+                <Text align="CENTER"><Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font></Text>
+            </PartText>
+        </Group>
+
+        <!-- 상단 좌측 원형 콤플리케이션: App Shortcut(기본 차량 앱). 5-2 좌표표: x70,y130,52x52 -->
+        <ComplicationSlot x="70" y="130" width="52" height="52" slotId="1" name="SLOT_TOP_LEFT"
+            displayName="차량 앱 바로가기" supportedTypes="MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <BoundingOval x="0" y="0" width="52" height="52" />
+            <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="MONOCHROMATIC_IMAGE" />
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <Group name="group_6" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <Group name="group_7" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="6" y="6" width="40" height="40">
+                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <!-- 미설정 상태(App Shortcut 미지정): 다크 배경 원 + 안내 아이콘("+") -->
+            <Complication type="EMPTY">
+                <Group name="group_8" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="0" y="0" width="52" height="52">
+                        <Text align="CENTER">
+                            <Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- 상단 우측 원형 콤플리케이션: App Shortcut(기본 AI 어시스턴트). 5-2 좌표표: x316,y130,52x52 -->
+        <ComplicationSlot x="316" y="130" width="52" height="52" slotId="2" name="SLOT_TOP_RIGHT"
+            displayName="AI 어시스턴트 바로가기" supportedTypes="MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <BoundingOval x="0" y="0" width="52" height="52" />
+            <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="MONOCHROMATIC_IMAGE" />
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <Group name="group_10" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <Group name="group_11" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="6" y="6" width="40" height="40">
+                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <!-- 미설정 상태(App Shortcut 미지정): 다크 배경 원 + 안내 아이콘("+") -->
+            <Complication type="EMPTY">
+                <Group name="group_12" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="0" y="0" width="52" height="52">
+                        <Text align="CENTER">
+                            <Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- 중단 좌측 원형 콤플리케이션: 기본 EMPTY(휴대폰 배터리). 5-2 좌표표: x70,y200,52x52 -->
+        <ComplicationSlot x="70" y="200" width="52" height="52" slotId="3" name="SLOT_MID_LEFT"
+            displayName="데이터 슬롯" supportedTypes="SHORT_TEXT RANGED_VALUE MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <BoundingOval x="0" y="0" width="52" height="52" />
+            <DefaultProviderPolicy defaultSystemProvider="EMPTY" defaultSystemProviderType="EMPTY" />
+            <!-- 미설정 상태: 다른 3개 콤플리케이션과 동일하게 다크 배경 원 + 안내 아이콘("+")로 통일 -->
+            <Complication type="EMPTY">
+                <Group name="group_13" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="0" y="0" width="52" height="52">
+                        <Text align="CENTER">
+                            <Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+            <Complication type="SHORT_TEXT">
+                <Group name="group_14" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="0" y="0" width="52" height="52">
+                        <Text align="CENTER">
+                            <Font family="notosanskr_bold" size="20" weight="BOLD" color="#FFFFFF">
+                                <Outline color="#B3000000" width="1.5" />
+                                <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+            <Complication type="RANGED_VALUE">
+                <Group name="group_15" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="0" y="0" width="52" height="52">
+                        <Text align="CENTER">
+                            <Font family="notosanskr_bold" size="20" weight="BOLD" color="#FFFFFF">
+                                <Outline color="#B3000000" width="1.5" />
+                                <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                            </Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <Group name="group_16" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <Group name="group_17" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="6" y="6" width="40" height="40">
+                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- 중단 우측 원형 콤플리케이션: App Shortcut(기본 음성녹음). 5-2 좌표표: x316,y200,52x52 -->
+        <ComplicationSlot x="316" y="200" width="52" height="52" slotId="4" name="SLOT_MID_RIGHT"
+            displayName="음성녹음 바로가기" supportedTypes="MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <BoundingOval x="0" y="0" width="52" height="52" />
+            <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="MONOCHROMATIC_IMAGE" />
+            <Complication type="MONOCHROMATIC_IMAGE">
+                <Group name="group_18" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <Complication type="SMALL_IMAGE">
+                <Group name="group_19" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartImage x="6" y="6" width="40" height="40">
+                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                    </PartImage>
+                </Group>
+            </Complication>
+            <!-- 미설정 상태(App Shortcut 미지정): 다크 배경 원 + 안내 아이콘("+") -->
+            <Complication type="EMPTY">
+                <Group name="group_20" x="0" y="0" width="52" height="52">
+                    <PartDraw x="0" y="0" width="52" height="52">
+                        <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
+                    </PartDraw>
+                    <PartText x="0" y="0" width="52" height="52">
+                        <Text align="CENTER">
+                            <Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- 날짜 (yyyy.MM.dd), 골드톤(6-1). 캔버스 중앙(x=219) 기준 실측 재정렬(날짜+요일 결합폭 실측 후 +56 이동,
+             SLOT_MID_LEFT/RIGHT 원형과 겹치지 않게 확인). AOD에선 숨김(5-1) -->
+        <PartText x="120" y="227" width="160" height="32">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Text align="END" verticalAlign="CENTER">
+                <Font family="notosanskr_bold" size="25" weight="BOLD" color="#FFDDAA">
+                    <Outline color="#B3000000" width="1.5" />
+                    <Template><![CDATA[%04d.%02d.%02d]]>
+                        <Parameter expression="[YEAR]" />
+                        <Parameter expression="[MONTH]" />
+                        <Parameter expression="[DAY]" />
+                    </Template>
+                </Font>
+            </Text>
+        </PartText>
+
+        <!-- 요일(월~일, DAY_OF_WEEK 1=일 ~ 7=토) 7색 + 다크 아웃라인. AOD에선 숨김(5-1) -->
+        <Group name="group_22" x="0" y="0" width="438" height="438">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <Condition>
+            <Expressions>
+                <Expression name="is_mon"><![CDATA[[DAY_OF_WEEK] == 2]]></Expression>
+                <Expression name="is_tue"><![CDATA[[DAY_OF_WEEK] == 3]]></Expression>
+                <Expression name="is_wed"><![CDATA[[DAY_OF_WEEK] == 4]]></Expression>
+                <Expression name="is_thu"><![CDATA[[DAY_OF_WEEK] == 5]]></Expression>
+                <Expression name="is_fri"><![CDATA[[DAY_OF_WEEK] == 6]]></Expression>
+                <Expression name="is_sat"><![CDATA[[DAY_OF_WEEK] == 7]]></Expression>
+            </Expressions>
+            <Compare expression="is_mon">
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#4FC3F7">
+                            <Outline color="#B3000000" width="1.5" />월</Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="is_tue">
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#8BC34A">
+                            <Outline color="#B3000000" width="1.5" />화</Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="is_wed">
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#FFD54F">
+                            <Outline color="#B3000000" width="1.5" />수</Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="is_thu">
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#FF8A50">
+                            <Outline color="#B3000000" width="1.5" />목</Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="is_fri">
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#F06292">
+                            <Outline color="#B3000000" width="1.5" />금</Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="is_sat">
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#42A5F5">
+                            <Outline color="#B3000000" width="1.5" />토</Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Default>
+                <!-- DAY_OF_WEEK == 1 (일요일) -->
+                <PartText x="285" y="227" width="40" height="32">
+                    <Text align="START" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#EF5350">
+                            <Outline color="#B3000000" width="1.5" />일</Font>
+                    </Text>
+                </PartText>
+            </Default>
+        </Condition>
+        </Group>
+
+        <!-- 오전/오후 접두, 세로 쌓기(오/전, 오/후). 5-2 좌표표: x78,y264,32x59. AMPM_STATE 0=오전 1=오후. AOD에선 숨김(5-1) -->
+        <Group name="group_23" x="0" y="0" width="438" height="438">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <Condition>
+            <Expressions>
+                <Expression name="is_pm"><![CDATA[[AMPM_STATE] == 1]]></Expression>
+            </Expressions>
+            <Compare expression="is_pm">
+                <Group name="group_24" x="78" y="264" width="32" height="59">
+                    <PartText x="0" y="0" width="32" height="30">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="27" weight="BOLD" color="#FFB27A">
+                                <Outline color="#B3000000" width="1.5" />오</Font>
+                        </Text>
+                    </PartText>
+                    <PartText x="0" y="30" width="32" height="29">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="27" weight="BOLD" color="#FFB27A">
+                                <Outline color="#B3000000" width="1.5" />후</Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Compare>
+            <Default>
+                <Group name="group_25" x="78" y="264" width="32" height="59">
+                    <PartText x="0" y="0" width="32" height="30">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="27" weight="BOLD" color="#FFB27A">
+                                <Outline color="#B3000000" width="1.5" />오</Font>
+                        </Text>
+                    </PartText>
+                    <PartText x="0" y="30" width="32" height="29">
+                        <Text align="CENTER" verticalAlign="CENTER">
+                            <Font family="notosanskr_bold" size="27" weight="BOLD" color="#FFB27A">
+                                <Outline color="#B3000000" width="1.5" />전</Font>
+                        </Text>
+                    </PartText>
+                </Group>
+            </Default>
+        </Condition>
+        </Group>
+
+        <!-- 메인 시계 다크 아웃라인(TimeText/Font는 Outline 자식 미지원 확인 → 검정 텍스트를 8방향 2px 오프셋으로 겹쳐 그리는
+             페이크 스트로크로 대체, 배경 박스 없음). 5-2 좌표표: x116,y254,190x78. AOD에서도 함께 표시되나 검정 배경이라 육안상 차이 없음 -->
+        <DigitalClock x="114" y="252" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="116" y="252" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="118" y="252" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="114" y="254" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="118" y="254" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="114" y="256" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="116" y="256" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+        <DigitalClock x="118" y="256" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#B3000000" />
+            </TimeText>
+        </DigitalClock>
+
+        <!-- 메인 시계: 12시간제 시:분 (TimeText는 DigitalClock 자식이어야 렌더링됨). 5-2 좌표표: x116,y254,190x78. AOD에서도 계속 표시 -->
+        <DigitalClock x="116" y="254" width="190" height="78">
+            <TimeText format="hh:mm" hourFormat="12" align="CENTER" verticalAlign="CENTER"
+                x="0" y="0" width="190" height="78">
+                <Font family="notosanskr_bold" size="74" weight="BOLD" color="#FFFFFF" />
+            </TimeText>
+        </DigitalClock>
+
+        <!-- 메인 시계 옆 초(seconds) 보조 표시. 하단(baseline)을 메인시계 하단(y324 부근)에 맞추되,
+             박스 높이를 키워 큰 폰트의 ascent가 위에서 잘리지 않게 함. width는 49→70으로 확장(TimeText는
+             PartText와 달리 선언된 width를 넘는 내용을 실제로 잘라내는 것을 실측 확인 → 굵은 2자리 조합도
+             안전하게 들어가도록 여유폭 확보, x=311 좌측 기준은 그대로 둬 메인시계와의 정렬 유지).
+             AOD에선 숨김(5-1, 초 제외 확정) -->
+        <DigitalClock x="311" y="270" width="70" height="70">
+            <TimeText format="ss" align="START" verticalAlign="BOTTOM"
+                x="0" y="0" width="70" height="70">
+                <Variant mode="AMBIENT" target="alpha" value="0" />
+                <Font family="notosanskr_bold" size="51" weight="BOLD" color="#FFB27A" />
+            </TimeText>
+        </DigitalClock>
+
+        <!-- 하단 알약 3종(배터리/걸음수/심박수, 독립 타원 3개). 5-2 좌표표: y340,h44, 폭 차등(소76/중96/대124).
+             아이콘은 이모지 글리프(시스템 폰트 폴백)로 demo_final.png 스타일에 근접하게 표현, 좌측 고정+값 우측정렬.
+             배경 rgba(35,26,52,.8)+테두리 rgba(255,255,255,.22) 1px, 텍스트 밝은 민트(#C9F7DC). AOD에선 숨김(5-1) -->
+        <Group name="group_26" x="0" y="0" width="438" height="438">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+
+        <!-- 알약1: 워치 배터리(중,96px, x65) -->
+        <PartDraw x="65" y="340" width="96" height="44">
+            <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
+                <Fill color="#CC231A34" />
+            </RoundRectangle>
+        </PartDraw>
+        <PartDraw x="65" y="340" width="96" height="44">
+            <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
+                <Stroke color="#38FFFFFF" thickness="1" />
+            </RoundRectangle>
+        </PartDraw>
+        <PartText x="65" y="340" width="96" height="14">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="notosanskr_bold" size="12" weight="BOLD" color="#C9F7DC">
+                    <Outline color="#B3000000" width="1" />워치 배터리</Font>
+            </Text>
+        </PartText>
+        <!-- 배터리 아이콘: 이모지/텍스트 렌더러는 단색만 지원되어 컬러 표현 불가 확인 →
+             날씨아이콘과 동일하게 컬러 PNG 이미지(icon_battery)로 대체 -->
+        <PartImage x="73" y="362" width="20" height="14">
+            <Image resource="icon_battery" />
+        </PartImage>
+        <PartText x="97" y="354" width="56" height="30">
+            <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
+                <Font family="notosanskr_bold" size="19" weight="BOLD" color="#C9F7DC" minSize="9">
+                    <Outline color="#B3000000" width="1.2" />
+                    <Template><![CDATA[%d%%]]><Parameter expression="[BATTERY_PERCENT]" /></Template>
+                </Font>
+            </Text>
+        </PartText>
+
+        <!-- 알약2: 걸음 수(대,124px, x167), 값 폰트 자릿수별 양방향 오토핏(1~2자리 크게 ~ 5자리 이상 작게) -->
+        <PartDraw x="167" y="340" width="124" height="44">
+            <RoundRectangle x="0" y="0" width="124" height="44" cornerRadiusX="22" cornerRadiusY="22">
+                <Fill color="#CC231A34" />
+            </RoundRectangle>
+        </PartDraw>
+        <PartDraw x="167" y="340" width="124" height="44">
+            <RoundRectangle x="0" y="0" width="124" height="44" cornerRadiusX="22" cornerRadiusY="22">
+                <Stroke color="#38FFFFFF" thickness="1" />
+            </RoundRectangle>
+        </PartDraw>
+        <PartText x="167" y="340" width="124" height="14">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="notosanskr_bold" size="12" weight="BOLD" color="#C9F7DC">
+                    <Outline color="#B3000000" width="1" />걸음 수</Font>
+            </Text>
+        </PartText>
+        <!-- 걸음수 아이콘: 이모지/텍스트 렌더러는 단색만 지원되어 컬러 표현 불가 확인 →
+             날씨아이콘과 동일하게 컬러 PNG 이미지(icon_steps)로 대체 -->
+        <PartImage x="176" y="356" width="17" height="26">
+            <Image resource="icon_steps" />
+        </PartImage>
+        <Condition>
+            <Expressions>
+                <Expression name="steps_s"><![CDATA[[STEP_COUNT] < 100]]></Expression>
+                <Expression name="steps_m"><![CDATA[[STEP_COUNT] < 1000]]></Expression>
+                <Expression name="steps_l"><![CDATA[[STEP_COUNT] < 10000]]></Expression>
+            </Expressions>
+            <Compare expression="steps_s">
+                <PartText x="199" y="354" width="84" height="30">
+                    <Text align="END" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="28" weight="BOLD" color="#C9F7DC">
+                            <Outline color="#B3000000" width="1.2" />
+                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="steps_m">
+                <PartText x="199" y="354" width="84" height="30">
+                    <Text align="END" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="24" weight="BOLD" color="#C9F7DC">
+                            <Outline color="#B3000000" width="1.2" />
+                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Compare expression="steps_l">
+                <PartText x="199" y="354" width="84" height="30">
+                    <Text align="END" verticalAlign="CENTER">
+                        <Font family="notosanskr_bold" size="21" weight="BOLD" color="#C9F7DC">
+                            <Outline color="#B3000000" width="1.2" />
+                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Default>
+                <PartText x="199" y="354" width="84" height="30">
+                    <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
+                        <Font family="notosanskr_bold" size="17" weight="BOLD" color="#C9F7DC" minSize="9">
+                            <Outline color="#B3000000" width="1.2" />
+                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Default>
+        </Condition>
+
+        <!-- 알약3: 심박수(소,76px, x297). 스트레스 지수는 WFF SourceType 미지원 확인되어 제외(CLAUDE.md 7-2) -->
+        <PartDraw x="297" y="340" width="76" height="44">
+            <RoundRectangle x="0" y="0" width="76" height="44" cornerRadiusX="22" cornerRadiusY="22">
+                <Fill color="#CC231A34" />
+            </RoundRectangle>
+        </PartDraw>
+        <PartDraw x="297" y="340" width="76" height="44">
+            <RoundRectangle x="0" y="0" width="76" height="44" cornerRadiusX="22" cornerRadiusY="22">
+                <Stroke color="#38FFFFFF" thickness="1" />
+            </RoundRectangle>
+        </PartDraw>
+        <PartText x="297" y="340" width="76" height="14">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="notosanskr_bold" size="12" weight="BOLD" color="#C9F7DC">
+                    <Outline color="#B3000000" width="1" />심박수</Font>
+            </Text>
+        </PartText>
+        <!-- 심박 아이콘: 컬러 이모지도 WFF Text 렌더러에서 단색 렌더 확인 →
+             날씨아이콘과 동일하게 컬러 PNG 이미지(icon_heart)로 대체 -->
+        <PartImage x="305" y="359" width="20" height="20">
+            <Image resource="icon_heart" />
+        </PartImage>
+        <PartText x="329" y="354" width="36" height="30">
+            <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
+                <Font family="notosanskr_bold" size="19" weight="BOLD" color="#C9F7DC" minSize="9">
+                    <Outline color="#B3000000" width="1.2" />
+                    <Template><![CDATA[%.0f]]><Parameter expression="[HEART_RATE]" /></Template>
+                </Font>
+            </Text>
+        </PartText>
+        </Group>
+
+        <!-- 최하단: 워치페이스 이름 고정 텍스트. 곡선(TextCircular)은 WFF Wear OS 4+(v4) 전용이라
+             본 프로젝트 확정 버전 v2(15단계, FavoriteOperationException 회피)에서는 사용 불가 확인 →
+             CLAUDE.md 5-16 대안 ②(직선 유지) 채택. 5-2 좌표표: x139,y395,160x32. 볼드 아님(NORMAL)+피치/탠 색상(6-1). AOD에선 숨김(5-1) -->
+        <PartText x="139" y="395" width="160" height="32">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="notosanskr_regular" size="16" weight="NORMAL" color="#F2C9A0">
+                    <Outline color="#B3000000" width="1.2" />바람개비 워치8 클래식</Font>
+            </Text>
+        </PartText>
+
+    </Scene>
+</WatchFace>
