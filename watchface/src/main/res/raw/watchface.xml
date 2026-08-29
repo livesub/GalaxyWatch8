@@ -901,7 +901,7 @@
                 <Expression name="steps_l"><![CDATA[[STEP_COUNT] < 10000]]></Expression>
             </Expressions>
             <Compare expression="steps_s">
-                <PartText x="196" y="354" width="65" height="30">
+                <PartText x="196" y="354" width="57" height="30">
                     <Text align="END" verticalAlign="CENTER">
                         <Font family="notosanskr_bold" size="28" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
@@ -911,7 +911,7 @@
                 </PartText>
             </Compare>
             <Compare expression="steps_m">
-                <PartText x="196" y="354" width="65" height="30">
+                <PartText x="196" y="354" width="57" height="30">
                     <Text align="END" verticalAlign="CENTER">
                         <Font family="notosanskr_bold" size="24" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
@@ -921,7 +921,7 @@
                 </PartText>
             </Compare>
             <Compare expression="steps_l">
-                <PartText x="196" y="354" width="65" height="30">
+                <PartText x="196" y="354" width="57" height="30">
                     <Text align="END" verticalAlign="CENTER">
                         <Font family="notosanskr_bold" size="21" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
@@ -931,7 +931,7 @@
                 </PartText>
             </Compare>
             <Default>
-                <PartText x="196" y="354" width="65" height="30">
+                <PartText x="196" y="354" width="57" height="30">
                     <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
                         <Font family="notosanskr_bold" size="17" weight="BOLD" color="#C9F7DC" minSize="9">
                             <Outline color="#B3000000" width="1.2" />
