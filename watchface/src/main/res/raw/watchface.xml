@@ -835,13 +835,13 @@
             </TimeText>
         </DigitalClock>
 
-        <!-- 하단 알약 3종(배터리/걸음수/심박수, 독립 타원 3개). 5-2 좌표표: y340,h44, 폭 차등(소76/중96/대124).
-             아이콘은 이모지 글리프(시스템 폰트 폴백)로 demo_final.png 스타일에 근접하게 표현, 좌측 고정+값 우측정렬.
+        <!-- 하단 알약 3종(배터리/걸음수/심박수, 독립 타원 3개). 5-2 좌표표: 3개 전부 96x44 통일(y340,x65/171/277,간격10px,안전범위65~373).
+             아이콘 좌측고정(8px inset), 배터리/심박수는 값 가운데정렬(아이콘 우측 여백 기준), 걸음수만 값 오른쪽정렬(우측6px여백,999999 대응).
              배경 rgba(35,26,52,.8)+테두리 rgba(255,255,255,.22) 1px, 텍스트 밝은 민트(#C9F7DC). AOD에선 숨김(5-1) -->
         <Group name="group_26" x="0" y="0" width="438" height="438">
         <Variant mode="AMBIENT" target="alpha" value="0" />
 
-        <!-- 알약1: 워치 배터리(중,96px, x65) -->
+        <!-- 알약1: 워치 배터리(96px, x65), 값 가운데정렬 -->
         <PartDraw x="65" y="340" width="96" height="44">
             <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
                 <Fill color="#CC231A34" />
@@ -863,8 +863,8 @@
         <PartImage x="73" y="362" width="20" height="14">
             <Image resource="icon_battery" />
         </PartImage>
-        <PartText x="97" y="354" width="56" height="30">
-            <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
+        <PartText x="93" y="354" width="68" height="30">
+            <Text align="CENTER" verticalAlign="CENTER" isAutoSize="TRUE">
                 <Font family="notosanskr_bold" size="19" weight="BOLD" color="#C9F7DC" minSize="9">
                     <Outline color="#B3000000" width="1.2" />
                     <Template><![CDATA[%d%%]]><Parameter expression="[BATTERY_PERCENT]" /></Template>
@@ -872,18 +872,18 @@
             </Text>
         </PartText>
 
-        <!-- 알약2: 걸음 수(대,124px, x167), 값 폰트 자릿수별 양방향 오토핏(1~2자리 크게 ~ 5자리 이상 작게) -->
-        <PartDraw x="167" y="340" width="124" height="44">
-            <RoundRectangle x="0" y="0" width="124" height="44" cornerRadiusX="22" cornerRadiusY="22">
+        <!-- 알약2: 걸음 수(96px, x171), 값 오른쪽정렬(우측6px여백), 자릿수별 양방향 오토핏(1~2자리 크게 ~ 5자리 이상 작게) 유지 -->
+        <PartDraw x="171" y="340" width="96" height="44">
+            <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
                 <Fill color="#CC231A34" />
             </RoundRectangle>
         </PartDraw>
-        <PartDraw x="167" y="340" width="124" height="44">
-            <RoundRectangle x="0" y="0" width="124" height="44" cornerRadiusX="22" cornerRadiusY="22">
+        <PartDraw x="171" y="340" width="96" height="44">
+            <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
                 <Stroke color="#38FFFFFF" thickness="1" />
             </RoundRectangle>
         </PartDraw>
-        <PartText x="167" y="340" width="124" height="14">
+        <PartText x="171" y="340" width="96" height="14">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="notosanskr_bold" size="12" weight="BOLD" color="#C9F7DC">
                     <Outline color="#B3000000" width="1" />걸음 수</Font>
@@ -891,7 +891,7 @@
         </PartText>
         <!-- 걸음수 아이콘: 이모지/텍스트 렌더러는 단색만 지원되어 컬러 표현 불가 확인 →
              날씨아이콘과 동일하게 컬러 PNG 이미지(icon_steps)로 대체 -->
-        <PartImage x="176" y="356" width="17" height="26">
+        <PartImage x="179" y="356" width="17" height="26">
             <Image resource="icon_steps" />
         </PartImage>
         <Condition>
@@ -901,7 +901,7 @@
                 <Expression name="steps_l"><![CDATA[[STEP_COUNT] < 10000]]></Expression>
             </Expressions>
             <Compare expression="steps_s">
-                <PartText x="199" y="354" width="84" height="30">
+                <PartText x="196" y="354" width="65" height="30">
                     <Text align="END" verticalAlign="CENTER">
                         <Font family="notosanskr_bold" size="28" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
@@ -911,7 +911,7 @@
                 </PartText>
             </Compare>
             <Compare expression="steps_m">
-                <PartText x="199" y="354" width="84" height="30">
+                <PartText x="196" y="354" width="65" height="30">
                     <Text align="END" verticalAlign="CENTER">
                         <Font family="notosanskr_bold" size="24" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
@@ -921,7 +921,7 @@
                 </PartText>
             </Compare>
             <Compare expression="steps_l">
-                <PartText x="199" y="354" width="84" height="30">
+                <PartText x="196" y="354" width="65" height="30">
                     <Text align="END" verticalAlign="CENTER">
                         <Font family="notosanskr_bold" size="21" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
@@ -931,7 +931,7 @@
                 </PartText>
             </Compare>
             <Default>
-                <PartText x="199" y="354" width="84" height="30">
+                <PartText x="196" y="354" width="65" height="30">
                     <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
                         <Font family="notosanskr_bold" size="17" weight="BOLD" color="#C9F7DC" minSize="9">
                             <Outline color="#B3000000" width="1.2" />
@@ -942,18 +942,18 @@
             </Default>
         </Condition>
 
-        <!-- 알약3: 심박수(소,76px, x297). 스트레스 지수는 WFF SourceType 미지원 확인되어 제외(CLAUDE.md 7-2) -->
-        <PartDraw x="297" y="340" width="76" height="44">
-            <RoundRectangle x="0" y="0" width="76" height="44" cornerRadiusX="22" cornerRadiusY="22">
+        <!-- 알약3: 심박수(96px, x277), 값 가운데정렬. 스트레스 지수는 WFF SourceType 미지원 확인되어 제외(CLAUDE.md 7-2) -->
+        <PartDraw x="277" y="340" width="96" height="44">
+            <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
                 <Fill color="#CC231A34" />
             </RoundRectangle>
         </PartDraw>
-        <PartDraw x="297" y="340" width="76" height="44">
-            <RoundRectangle x="0" y="0" width="76" height="44" cornerRadiusX="22" cornerRadiusY="22">
+        <PartDraw x="277" y="340" width="96" height="44">
+            <RoundRectangle x="0" y="0" width="96" height="44" cornerRadiusX="22" cornerRadiusY="22">
                 <Stroke color="#38FFFFFF" thickness="1" />
             </RoundRectangle>
         </PartDraw>
-        <PartText x="297" y="340" width="76" height="14">
+        <PartText x="277" y="340" width="96" height="14">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="notosanskr_bold" size="12" weight="BOLD" color="#C9F7DC">
                     <Outline color="#B3000000" width="1" />심박수</Font>
@@ -961,11 +961,11 @@
         </PartText>
         <!-- 심박 아이콘: 컬러 이모지도 WFF Text 렌더러에서 단색 렌더 확인 →
              날씨아이콘과 동일하게 컬러 PNG 이미지(icon_heart)로 대체 -->
-        <PartImage x="305" y="359" width="20" height="20">
+        <PartImage x="285" y="359" width="20" height="20">
             <Image resource="icon_heart" />
         </PartImage>
-        <PartText x="329" y="354" width="36" height="30">
-            <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
+        <PartText x="305" y="354" width="68" height="30">
+            <Text align="CENTER" verticalAlign="CENTER" isAutoSize="TRUE">
                 <Font family="notosanskr_bold" size="19" weight="BOLD" color="#C9F7DC" minSize="9">
                     <Outline color="#B3000000" width="1.2" />
                     <Template><![CDATA[%.0f]]><Parameter expression="[HEART_RATE]" /></Template>
