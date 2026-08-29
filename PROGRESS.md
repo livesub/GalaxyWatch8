@@ -495,6 +495,21 @@
 - 빌드/설치 정상, 크래시 없음
 - CLAUDE.md 변경 없음(폰트 파일 교체는 스펙 변경 아님, 사용자 확인)
 
+## 21-17 최종 결과: 15단계 Validator 재검증 (2026-08-29)
+폰트 서브셋 반영된 현재 최종 상태(커밋 `5be1cc2`)를 대상으로 15단계와 동일한 google/watchface 공식 Validator(`memory-footprint.jar`, 동일 workaround: verticalAlign/isAutoSize/minSize 3개 known-gap 속성 제거한 임시 사본)로 실측 재검증(추정치 아님, 툴 실행 결과).
+
+| 항목 | 21-17 시작 전(기준점, 태그 `dev-final-before-optimization`) | 21-17 최종 | 변화 |
+|---|---|---|---|
+| Active(인터랙티브) | 8,283,448B (7.90MB) | 3,395,468B (3.24MB) | -58.99% |
+| Ambient(AOD) | 2,457,336B (2.34MB) | 13,452B (0.013MB) | -99.45% |
+| Active 한도(100MB) 대비 | 7.90% | 3.24% | |
+| Ambient 한도(10MB) 대비 | 23.4% | 0.13% | |
+| Validator 결과 | PASS, 오류 0건 | PASS, 오류 0건 | 동일 |
+
+- 감소 원인: 21-17-5 폰트 서브셋(notosanskr_bold/regular 각 2.34MB→13KB대)이 유일한 실질 변경, 나머지(Optimizer/노드순서/renderMode등)는 전부 미적용
+- 텍스트 렌더링 육안 diff: 258px(전부 원형 화면 바깥 경계 안티에일리어싱, 최대채널diff 4/255), 실 콘텐츠 영역 diff 0 — 21-17-5 기록 참조
+- **21-17단계 최종 종료**
+
 ## 이슈/보류 메모
 - 스트레스 지수: 구현 시도 결과 → (성공/실패 기록)
 - 폰배터리 슬롯(SLOT_MID_LEFT): 사용자 앱 지정 테스트 결과 →
