@@ -432,6 +432,21 @@
 - **결론**: "즐겨찾기 목록 편집 버튼 노출 여부"와 "편집화면 진입 후 4개 슬롯 앱 선택 가능 여부"는 이번엔 확인 불가 — 편집화면 자체가 preview.xml 크래시로 열리지 않음. Editable=true는 유지(정상적인 수정이며 필요 조건으로 확인됨), preview.xml 교체(래스터 이미지로) 없이는 추가 검증 불가능한 상태
 - 다음 필요 작업(사용자 확인 후 진행): `preview.xml`을 실제 디지털 워치페이스 디자인 기준 래스터(PNG/WebP) 미리보기로 교체 — 이번 지시 범위("다른 파일 건드리지 말 것") 밖이라 미실행
 
+## 22단계(앞당김): preview.xml → preview.png 교체로 SysUI 크래시 해결 (2026-08-29)
+- 원인: `watchface/src/main/res/drawable/preview.xml`이 초기 스캐폴드의 아날로그 시계 목업 `<vector>`(VectorDrawable)로 그대로 방치돼 있었음. `AndroidManifest.xml`의 `icon`/`preview`/`preview_circular`, `watch_face_info.xml`의 `<Preview>`가 전부 `@drawable/preview`(이름 참조)를 가리켜서 실제로는 이 벡터가 로드되고 있었음
+- 조치:
+  1. 에뮬레이터에서 완성된 워치페이스 실사용화면 캡처(454x454 실측) → 438x438로 리사이즈해 `drawable/preview.png`로 저장(래스터 PNG, 194KB)
+  2. 기존 `preview.xml` 삭제(동일 리소스명 `preview` 충돌 방지 겸 벡터 참조 완전 제거)
+  3. `AndroidManifest.xml`/`watch_face_info.xml`은 전부 확장자 없는 `@drawable/preview` 이름 참조라 파일 교체만으로 자동으로 새 PNG를 가리킴 확인 — **텍스트 수정 불필요**(리소스 이름 해석 방식상 당연한 결과, 확인만 하고 그대로 둠)
+  - 다른 좌표/레이아웃/watchface.xml은 전혀 건드리지 않음(diff: preview.xml 삭제 + preview.png 추가, 2개 항목뿐)
+- 빌드 성공. 재설치 후 검증:
+  - **크래시 완전 해소 확인**: Editable=true 상태에서 long-press → "Edit watch face" 버튼(실제 좌표는 uiautomator dump로 정확히 확인: bounds=[175,380][279,444]) 등장, 탭해도 이전처럼 `ClassCastException`으로 SysUI가 죽지 않음(3회 반복 재현했던 크래시가 이번엔 0회, 완전 해결)
+  - "Edit watch face" 탭 후 실제 화면에 진입 성공 — 단, 이 화면은 시스템이 제공하는 **샘플 프리뷰 데이터**(온도25°C·화창함·최저18°최고30°·강수확률 유지·걸음수3457·심박89·일출일몰 6:32PM 등)로 채워져서 표시됨. 이는 우리 WEATHER.*/STEP_COUNT/HEART_RATE 등 표현식이 실제로 유효한 값을 받으면 정상 렌더링된다는 것도 부수적으로 확인시켜줌(그동안 에뮬레이터에서 항상 폴백값만 봤던 것과 대조)
+  - **4개 슬롯 개별 "앱 선택" 피커까지는 확인 못 함**: 위 프리뷰 화면에서 "+" 콤플리케이션 자리를 직접 tap(SLOT_TOP_LEFT 좌표)했으나 개별 피커가 뜨지 않고 캐러셀이 닫히며 일반 시계 화면으로 복귀함. uiautomator dump로 확인한 결과 이 프리뷰 화면은 WFF가 통째로 그리는 서페이스라 콤플리케이션별 개별 탭 영역이 접근성 트리에 노출되지 않음(전부 `clickable="false"`, 콤플리케이션 하위 노드 자체가 없음) — 이 경로가 진짜 "슬롯별 앱 선택 화면"으로 이어지는 공식 플로우가 맞는지, 혹은 이 AVD 시스템 이미지(Wear OS 5, sdk_gwear)가 완전한 편집 UI를 갖추지 못한 것인지 이번 조사로는 확정 불가
+  - 캡처 보관: `D:\갤럭시 워치8\Temp_Del\preview_fix_carousel_editbutton.png`(Edit 버튼 노출), `preview_fix_edit_sampledata.png`(편집 진입 후 샘플데이터 렌더)
+- CLAUDE.md 8/9번 "런처 아이콘 미확보" 항목 갱신(8번: 완료 사실+경로 기록, 9번: 미확정 목록에서 제거)
+- **다음 확인 필요**: 4개 슬롯 실제 앱 지정 피커 동작은 실기기(갤럭시 워치8 클래식)에서 최종 확인 필요(CLAUDE.md 6-6 기존 에뮬레이터 한계 원칙과 동일 결론)
+
 ## 이슈/보류 메모
 - 스트레스 지수: 구현 시도 결과 → (성공/실패 기록)
 - 폰배터리 슬롯(SLOT_MID_LEFT): 사용자 앱 지정 테스트 결과 →
