@@ -2,7 +2,7 @@
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
-- 포맷: Watch Face Format (WFF) v2, watchface.xml 선언형 (v5 상향 시도했으나 실기기/에뮬레이터에서 패키지 자체 거부(FavoriteOperationException) 확인 → v2로 최종 확정. isAutoSize/verticalAlign은 v2 XSD상 미지원 리포트 뜨지만 실제 렌더 정상 동작 확인되어 그대로 유지)
+- 포맷: Watch Face Format (WFF) v2, watchface.xml 선언형 (v5 상향 시도했으나 실기기/에뮬레이터에서 패키지 자체 거부(FavoriteOperationException) 확인 → v2로 최종 확정. isAutoSize/verticalAlign/minSize(오토사이즈 부속 속성)는 v2 XSD상 미지원 리포트 뜨지만 실제 렌더 정상 동작 확인되어 그대로 유지)
 
 ## 2. 대상 기기 사양
 - 디스플레이: 1.34" Super AMOLED, 원형
