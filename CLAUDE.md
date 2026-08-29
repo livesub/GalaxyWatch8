@@ -1,6 +1,6 @@
 # 갤럭시 워치8 클래식 워치페이스 제작 규칙 (CLAUDE.md)
 
-⚠️ 21-17 최적화 중 문제 생기면 이 커밋/태그로 원복: 커밋 `bbb1fed9eb5a0a9445d153507a5a7db3aa1e164c` / 태그 `dev-final-before-optimization`
+⚠️ 문제 생기면 이 커밋/태그로 원복: 커밋 b4f0574 / 태그 dev-final-stable-v2 (git reset --hard dev-final-stable-v2) — 23단계 걸음수 알약 여백 확정 기준점, 21-17 최적화 완료 반영됨
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
