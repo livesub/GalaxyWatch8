@@ -422,6 +422,16 @@
 - **3. 실기기 없이는 확인 불가능한 항목**: WEATHER.* 전체(온도/코멘트/최고최저/강수확률) 실제 수신값, SUNRISE_SUNSET 실제 시각, STEP_COUNT/HEART_RATE 실제 센서값 — 전부 에뮬레이터 GPS/센서 부재로 폴백값만 표시(CLAUDE.md 6-6 기존 한계와 동일). 콤플리케이션 4개 슬롯의 실제 앱 지정 동작도 위 Editable=false 이슈로 이번엔 재확인 불가
 - **4. 문제 있는 항목 요약**: `watchface/src/main/res/xml/watch_face_info.xml:7`(`Editable="false"`) 외에는 하드코딩/바인딩 결함 없음
 
+## Editable=true 변경 + 편집화면 진입 검증 (2026-08-29)
+- `watchface/src/main/res/xml/watch_face_info.xml:7` `Editable="false"` → `"true"`로 변경(1줄, 다른 파일 미수정). 빌드/재설치 성공
+- **부분 확인됨**: Editable=false였을 때는 에뮬레이터에서 long-press(swipe 2500ms)를 줘도 화면에 아무 반응이 없었는데(21-16-2단계 기록), true로 바꾼 뒤 동일한 long-press를 주니 시스템이 편집 진입을 실제로 "시도"하는 것으로 확인(logcat상 SysUI 액티비티 기동 흔적) → **Editable=false가 편집 진입 자체를 차단하고 있었다는 사용자 판단이 로그로 뒷받침됨**
+- **새 차단 요인 발견(편집화면 자체는 못 열어봄)**: long-press할 때마다 `com.google.android.wearable.sysui`가 100% 재현되는 크래시로 즉시 종료됨 — 3회 연속 재현, 3번째는 크래시 다이얼로그 처리 지연으로 ANR까지 발생
+  - logcat: `FATAL EXCEPTION: main` / `java.lang.ClassCastException: android.graphics.drawable.VectorDrawable cannot be cast to android.graphics.drawable.BitmapDrawable`
+  - **원인 추정(높은 확신)**: `watchface/src/main/res/drawable/preview.xml`이 `<vector>`(VectorDrawable, 스캐폴드 초기의 아날로그 시계 목업 그대로 방치된 상태 — CLAUDE.md 8/9번에 "런처 아이콘 미확보"로 이미 기록돼있던 항목)인데, `AndroidManifest.xml`의 `android:icon`/`com.google.android.wearable.watchface.preview`/`preview_circular` meta-data가 전부 이 리소스를 가리킴. SysUI의 편집 캐러셀이 미리보기를 `BitmapDrawable`로 캐스팅하려다 실패하는 것으로 보임(캐스팅 실패 지점은 100% 확정은 아니나 정황상 유력)
+  - 크래시 후 SysUI는 자동 재시작되어 워치페이스 자체 렌더링은 정상 복구됨(캡처로 확인, `D:\갤럭시 워치8\Temp_Del\editable_true_sysui_crash.png`에 크래시 다이얼로그 원본 보관)
+- **결론**: "즐겨찾기 목록 편집 버튼 노출 여부"와 "편집화면 진입 후 4개 슬롯 앱 선택 가능 여부"는 이번엔 확인 불가 — 편집화면 자체가 preview.xml 크래시로 열리지 않음. Editable=true는 유지(정상적인 수정이며 필요 조건으로 확인됨), preview.xml 교체(래스터 이미지로) 없이는 추가 검증 불가능한 상태
+- 다음 필요 작업(사용자 확인 후 진행): `preview.xml`을 실제 디지털 워치페이스 디자인 기준 래스터(PNG/WebP) 미리보기로 교체 — 이번 지시 범위("다른 파일 건드리지 말 것") 밖이라 미실행
+
 ## 이슈/보류 메모
 - 스트레스 지수: 구현 시도 결과 → (성공/실패 기록)
 - 폰배터리 슬롯(SLOT_MID_LEFT): 사용자 앱 지정 테스트 결과 →
