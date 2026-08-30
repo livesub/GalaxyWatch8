@@ -11,9 +11,11 @@ day_13_rain_crying, day_14_cloud_dark_angry, day_15_rain_beanie_happy, day_16_sn
 
 ## night (16개)
 night_01_clear_moon, night_02_partly_cloudy_moon, night_03_cloudy_plain, night_04_stars_clear,
-night_05_rain_light, night_06_rain_sad, night_07_snow_light, night_08_snow_beanie_happy,
+night_05_rain_light, night_06_rain_sad, night_07_snow_light, night_08_snow_beanie_angry,
 night_09_thunderstorm_angry, night_10_cloud_plain2, night_11_wind_light, night_12_wind_strong,
 night_13_rain_crying, night_14_cloud_angry, night_15_rain_beanie_happy, night_16_snow_beanie_angry2
+
+⚠️ 정정(2026-08-30): 기존 문서에 night_08이 "snow_beanie_happy"로 잘못 표기돼있었음 — 실제 watchface.xml(376행)이 처음부터 정확히 참조하던 파일은 night_08_snow_beanie_angry였고, happy 파일은 원본 프로젝트에 아예 존재하지 않음(문서 오기로 인해 별도 준비된 것으로 추정). 코드7(SNOW) night는 angry 파일이 정답.
 
 ## WEATHER.CONDITION 매핑 (WFF 공식 0~15, day/night는 WEATHER.IS_DAY로 분기)
 - **32종 전부 1:1 매핑 확정**(예비/미사용 없음) — 코드 16개=이미지 16개, 겹치지 않게 재배정
@@ -26,7 +28,7 @@ night_13_rain_crying, night_14_cloud_angry, night_15_rain_beanie_happy, night_16
 | 4 | HEAVY_RAIN | day_13_rain_crying | night_13_rain_crying | |
 | 5 | HEAVY_SNOW | day_16_snow_beanie_angry | night_16_snow_beanie_angry2 | |
 | 6 | RAIN | day_06_rain_beanie_sad | night_06_rain_sad | |
-| 7 | SNOW | day_08_snow_beanie_happy | night_08_snow_beanie_happy | |
+| 7 | SNOW | day_08_snow_beanie_happy | night_08_snow_beanie_angry | night 파일명 정정됨(위 정정 안내 참조) |
 | 8 | SUNNY | day_04_clear_sun_b | night_04_stars_clear | CLEAR와 구분(맑음 2번째 버전) |
 | 9 | THUNDERSTORM | day_09_thunderstorm | night_09_thunderstorm_angry | |
 | 10 | SLEET | day_07_snow_light | night_07_snow_light | |

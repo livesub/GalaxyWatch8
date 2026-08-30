@@ -1,6 +1,6 @@
 # 갤럭시 워치8 클래식 워치페이스 제작 규칙 (CLAUDE.md)
 
-⚠️ 문제 생기면 이 커밋/태그로 원복(최신 안정 기준점): 커밋 49af02a / 태그 dev-final-stable-v4 (git reset --hard dev-final-stable-v4) — CLAUDE.md/개발_지시서.md 재구성(처음부터 빌드용 최종본 + 역대조 보완) 반영, 이전 기준점(b9e48c4/dev-final-stable-v3)의 즐겨찾기 라벨 한글화 포함
+⚠️ 문제 생기면 이 커밋/태그로 원복(최신 안정 기준점): 커밋 49af02a / 태그 dev-final-stable-v4 (git reset --hard dev-final-stable-v4)
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
@@ -126,6 +126,55 @@
 | 알약(심박수) | 277 | 340 | 96 | 44 | 값 가운데 정렬 |
 | 워치이름 텍스트 | 139 | 395 | 160 | 32 | 20단계 결정으로 직선 텍스트(곡선 아님), 가로 중앙정렬(center x=219) |
 
+### 5-3. 폰트 크기/family 전체 목록 (watchface.xml 실측값, 재현 시 필수)
+| 요소 | size | family/weight |
+|---|---|---|
+| 메인시계(시:분) | 74 | notosanskr_bold/BOLD |
+| 오전/오후 | 27 | notosanskr_bold/BOLD |
+| 초(seconds) | 51 | notosanskr_bold/BOLD |
+| 날짜 | 25 | notosanskr_bold/BOLD |
+| 요일(7개 공통) | 25 | notosanskr_bold/BOLD |
+| 온도 | 32 | notosanskr_bold/BOLD |
+| 최고/최저 기온 | 15 | notosanskr_bold/BOLD |
+| 날씨 코멘트 | 17 | notosanskr_bold/BOLD |
+| 일출/일몰 라벨 | 16 | notosanskr_bold/BOLD |
+| 일출/일몰 시각 | 21 | notosanskr_bold/BOLD |
+| 강수확률 라벨 | 11 | notosanskr_bold/BOLD |
+| 강수확률 값 | 13 | notosanskr_bold/BOLD |
+| 알약 라벨(3개 공통) | 12 | notosanskr_bold/BOLD |
+| 알약 값 - 배터리 | 19 | notosanskr_bold/BOLD |
+| 알약 값 - 걸음수 | 자릿수별 분기(28/24/21/17) — 5-4 참조 | notosanskr_bold/BOLD |
+| 알약 값 - 심박수 | 19 | notosanskr_bold/BOLD |
+| 알림 개수 | 11 | notosanskr_bold/BOLD |
+| 콤플리케이션 "+" 플레이스홀더 | 28 | notosanskr_bold/BOLD |
+| 워치이름 | 16 | **notosanskr_regular/NORMAL**(유일한 regular 사용처, 나머지 전부 bold) |
+
+- **폰트 family 규칙**: watchface.xml 전체에서 `family="notosanskr_regular"`는 워치이름 1곳(983행)에만 쓰이고, 그 외 모든 텍스트(약 59곳)는 `family="notosanskr_bold"`, `weight="BOLD"` — 새로 만들 때도 이 원칙 그대로(워치이름만 regular, 나머지 전부 bold)
+
+### 5-4. 걸음수 알약 값 오토핏 자릿수 분기 (x196,y354,w57,h30 공통 박스 안에서 크기만 전환)
+| 자릿수 구간 | size |
+|---|---|
+| 100 미만 | 28 |
+| 100~999 | 24 |
+| 1000~9999 | 21 |
+| 10000 이상(최대 999999) | 17, `isAutoSize="TRUE"` + `minSize="9"` |
+
+- 참고: `isAutoSize`+`minSize="9"` 안전장치는 걸음수뿐 아니라 배터리(size=19)·심박수(size=19) 값 텍스트에도 동일하게 적용됨(watchface.xml 868/936/969행) — 극단적으로 긴 값이 들어와도 최소 9까지 자동 축소되는 공통 안전장치
+
+### 5-5. 하단 알약 3개 내부 아이콘/값 절대좌표 (외곽 박스 안 세부 배치, watchface.xml 실측)
+| 알약 | 아이콘(PartImage) x,y,w,h | 값(PartText) x,y,w,h |
+|---|---|---|
+| 배터리(외곽 65,340,96,44) | 73,362,20,14 | 93,354,68,30 |
+| 걸음수(외곽 171,340,96,44) | 179,356,17,26 | 196,354,57,30(자릿수 분기 4개 공통) |
+| 심박수(외곽 277,340,96,44) | 285,359,20,20 | 305,354,68,30 |
+
+### 5-6. 날씨 아이콘 32종 x/y/width 산출 방식
+- 박스 고정: x=0, y=121, width=438, height=105(전체 캔버스 폭 기준)
+- 32종 전부 height=105로 고정(세로 꽉 채움), y=121 고정
+- width = 원본이미지 가로/세로 비율 유지 산출: `scale = 105 / 원본높이`, `width = 원본너비 × scale`
+- x = `219 − width/2` (캔버스 중앙 219 기준 좌우대칭) — 예: width104 → x=167, width159 → x≈140
+- ⚠️ WFF Image는 object-fit/자동맞춤 속성이 없어서 이 계산값이 각 이미지마다 XML에 리터럴(고정 숫자)로 직접 박혀있음(런타임 계산 아님) — 새로 만들 때도 32종 각각 원본 크기 확인 후 위 공식으로 개별 x/width를 미리 계산해서 넣어야 함
+
 ### 5-1. AOD(상시화면) 전용 레이아웃
 - **확정**: 위 1~17번 요소(콤플리케이션 전부 포함) 숨김, **시:분만 표시**(초 제외 — 앰비언트 1분 단위 갱신 특성상 제외 확정)
 
@@ -197,6 +246,18 @@
 
 ※ 좌우 위치 정정(데모 검수 확정): 좌측=일출(SLOT_SUNRISE), 우측=일몰(SLOT_SUNSET) — 5번 레이아웃 스펙 참조
 
+### 7-1-1. 콤플리케이션 4개 슬롯 supportedTypes + 이미지 크기/inset (원형 52x52 공통 패턴)
+| 슬롯 | supportedTypes |
+|---|---|
+| SLOT_TOP_LEFT | MONOCHROMATIC_IMAGE, SMALL_IMAGE, EMPTY |
+| SLOT_TOP_RIGHT | MONOCHROMATIC_IMAGE, SMALL_IMAGE, EMPTY |
+| SLOT_MID_LEFT | SHORT_TEXT, RANGED_VALUE, MONOCHROMATIC_IMAGE, SMALL_IMAGE, EMPTY |
+| SLOT_MID_RIGHT | MONOCHROMATIC_IMAGE, SMALL_IMAGE, EMPTY |
+
+- MONOCHROMATIC_IMAGE: x=9,y=9,width=34,height=34 (52x52 원 안 inset 9px), `tintColor="#FFFFFFFF"` 적용
+- SMALL_IMAGE: x=6,y=6,width=40,height=40 (inset 6px), 틴트 없음
+- EMPTY 플레이스홀더: Ellipse 52x52, fill `#59000000`, "+" 텍스트 size=28, color `#B3FFFFFF`
+
 ### 7-2. 직접 데이터 바인딩 (ComplicationSlot 아님, 슬롯 한도에 포함 안 됨)
 - 날씨(온도/아이콘, 일출·일몰 제외): `[WEATHER.*]` expression — WEATHER.*에는 sunrise/sunset 없음, 온도 단위 강제(℃) 가능 여부는 빌드 단계 확인
 - 최고/최저 기온: `WEATHER.DAYS.0.TEMPERATURE_LOW` / `WEATHER.DAYS.0.TEMPERATURE_HIGH` 확정 사용(watchface.xml 4곳, 화씨→섭씨 변환 분기 포함) — WEATHER.DAY_TEMPERATURE_LOW/HIGH(비배열 형태)는 미사용
@@ -235,6 +296,11 @@
 - AOD 초(seconds) 표시: 제외로 확정(구글 공식 원칙상 ambient 1분 단위 갱신 — 5-1 참조)
 - **일출/일몰 데이터소스**: `SUNRISE_SUNSET`은 구글 공식 Wear OS 시스템 데이터소스로 확인됨(WFF `DefaultProviderPolicy.defaultSystemProvider`, Wear OS 4+). 다만 일부 구형 기기/삼성 자체 툴(Watch Face Studio) 관련 커뮤니티 보고 사례가 있었으므로, 실기기(갤럭시 워치8 클래식)에서 실제 값이 정상 갱신되는지는 6-6 테스트 단계에서 최종 확인
 - **콤플리케이션 개별 탭→앱 선택 피커**: 에뮬레이터(uiautomator)에서는 개별 탭 타겟 노출이 안 돼서 확인 불가(실제 미구현인지 AVD 한계인지 불명확) — 실기기에서 최종 확인 필요(개발_지시서.md 12단계)
+- **실기기 가독성 문제(2026-08-30 발견)**: 실물 워치에서 요일/알약 등 작은 텍스트가 사용자 기준 잘 안 보임(노안 등 개인 시력 특성 — 폰트 크기 자체를 전반적으로 상향 조정 검토 필요). 즉시 수정 아님, 추후 시간 날 때 전체 폰트 크기 재검토 예정. 기준 스크린샷은 세션 로컬 보관 중.
+
+## 9-1. 확정 버그/오해 정정 기록 (재발 방지용)
+- **WFF에는 `<Outline>` 요소가 존재하지 않음**: 한때 `<Font><Outline color="..." width="..."/>텍스트</Font>` 구문이 공식 지원되는 것으로 오인하여 요일 텍스트에 적용했으나, 실기기·에뮬레이터 둘 다 아무 효과 없이 무시됨(파서가 미지원 요소를 조용히 스킵). 공식 "Work with text" 튜토리얼 재확인 결과 텍스트 데코레이션은 `OutGlow`/`Shadow`만 존재. **텍스트 아웃라인(테두리)은 항상 TimeText와 동일한 방식(검정색 복제 텍스트를 8방향 오프셋으로 원본 색상 텍스트 아래 겹쳐 그리기)으로만 구현할 것** — `<Outline>` 요소 시도 금지.
+- 요일 텍스트 아웃라인: 검정 `#D9000000`, 8방향 ±2px 오프셋 복제 PartText 8개 + 원본 색상 PartText 1개(총 9개 겹침) 구조로 확정(2026-08-30 실기기 검증 완료).
 
 ## 10. 작업 방식 규칙 (Claude Code CLI 대상)
 - 요청 범위 외 리팩토링 금지
