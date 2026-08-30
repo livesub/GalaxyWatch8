@@ -1,6 +1,6 @@
 # 갤럭시 워치8 클래식 워치페이스 제작 규칙 (CLAUDE.md)
 
-⚠️ 문제 생기면 이 커밋/태그로 원복: 커밋 b4f0574 / 태그 dev-final-stable-v2 (git reset --hard dev-final-stable-v2) — 23단계 걸음수 알약 여백 확정 기준점, 21-17 최적화 완료 반영됨
+⚠️ 문제 생기면 이 커밋/태그로 원복: 커밋 b9e48c4 / 태그 dev-final-stable-v3 (git reset --hard dev-final-stable-v3) — 즐겨찾기 라벨(watch_face_name) 한글화("바람개비 워치8 클래식") 반영, 이전 기준점(b4f0574/dev-final-stable-v2)의 23단계 걸음수 알약 여백/21-17 최적화 내용 포함
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
