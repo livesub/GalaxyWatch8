@@ -1,6 +1,6 @@
 # 갤럭시 워치8 클래식 워치페이스 제작 규칙 (CLAUDE.md)
 
-⚠️ 문제 생기면 이 커밋/태그로 원복(최신 안정 기준점): 커밋 b9e48c4 / 태그 dev-final-stable-v3 (git reset --hard dev-final-stable-v3)
+⚠️ 문제 생기면 이 커밋/태그로 원복(최신 안정 기준점): 커밋 49af02a / 태그 dev-final-stable-v4 (git reset --hard dev-final-stable-v4) — CLAUDE.md/개발_지시서.md 재구성(처음부터 빌드용 최종본 + 역대조 보완) 반영, 이전 기준점(b9e48c4/dev-final-stable-v3)의 즐겨찾기 라벨 한글화 포함
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
