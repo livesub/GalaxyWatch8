@@ -1,6 +1,6 @@
 # 갤럭시 워치8 클래식 워치페이스 제작 규칙 (CLAUDE.md)
 
-⚠️ 문제 생기면 이 커밋/태그로 원복: 커밋 b9e48c4 / 태그 dev-final-stable-v3 (git reset --hard dev-final-stable-v3) — 즐겨찾기 라벨(watch_face_name) 한글화("바람개비 워치8 클래식") 반영, 이전 기준점(b4f0574/dev-final-stable-v2)의 23단계 걸음수 알약 여백/21-17 최적화 내용 포함
+⚠️ 문제 생기면 이 커밋/태그로 원복(최신 안정 기준점): 커밋 b9e48c4 / 태그 dev-final-stable-v3 (git reset --hard dev-final-stable-v3)
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
@@ -41,6 +41,7 @@
 ## 4. 리소스 경로 (고정 — 매번 재지시 불필요, 실제 스캐폴드 기준 정정됨)
 - 실제 프로젝트 구조: root + `:watchface` 서브모듈. 빌드/리소스는 전부 서브모듈 기준
 - watchface.xml: `watchface/src/main/res/raw/watchface.xml`
+- watch_face_info.xml: `watchface/src/main/res/xml/watch_face_info.xml` (Editable/Preview 설정)
 - 프로덕션 이미지(drawable): `watchface/src/main/res/drawable` (서브모듈 내부에 있어야 watchface.xml에서 참조 가능 — root의 `src/main/res/drawable`가 아님)
 - 원본 참조 이미지(빌드 제외, 참고용): `src/main/design/orgi.png` (root, 그대로 유지)
 - 날씨 아이콘 32종 + WFF CONDITION 매핑표: `docs/weather_icons.md` (root)
@@ -48,10 +49,28 @@
 - 진행상황 기록: `PROGRESS.md` (root)
 - `assets/`(root, 빈 폴더): 템플릿 생성 잔여물로 추정, 용도 없으면 정리 대상
 
+### 4-1. 처음부터 빌드 시 필요한 리소스 파일 전체 목록 (사전 준비 필수)
+1. **날씨 아이콘 32종**(day 16 + night 16, 각 480x480 PNG RGBA 원본) — 파일명/매핑표는 `docs/weather_icons.md` 참조. 빌드 스크립트가 WebP 변환+실사용 크기 리사이즈 자동 처리(2단계)
+2. **강수확률 우산 아이콘 1종**(`rain_umbrella`, 원본 260x236, 투명배경 PNG) — 32종과 동일 변환 파이프라인으로 WebP화
+2-1. **하단 알약 아이콘 3종**(`icon_battery.png`, `icon_heart.png`, `icon_steps.png`) — watchface.xml에서 실제 참조되는 별도 이미지 파일(코드로 직접 그리는 벡터가 아님), 워치배터리/심박수/걸음수 알약 좌측에 배치
+3. **배경 이미지 2종**(day/night, 각 1장) — 6-1-1의 그라디언트 톤 기준으로 생성(제미나이 등), 사각형으로 나와도 반드시 원형 크롭 후 사용
+4. **폰트 파일 2종**: `notosanskr_bold.ttf`, `notosanskr_regular.ttf`(SIL OFL) — 처음부터 서브셋 버전으로 준비 권장(21-17-5 확정 76자 세트: 숫자 0-9, 콜론, 마침표, 가운뎃점(·), 도(°), 퍼센트(%), "오전""오후", 요일 한글 7개, "강수확률""워치배터리""걸음수""심박수""정보 없음""날씨 데이터 로드 실패, 실기기에서 확인 필요", `docs/weather_icons.md` 날씨 코멘트 문구 전부, "바람개비 워치8 클래식") — 처음부터 이 문자셋으로 서브셋하면 21-17-5 재작업 불필요
+5. **미리보기 이미지**(`preview.png`) — 사전 준비 불필요. 전체 빌드 완성 후 에뮬레이터 실제 화면을 캡처해서 만듦(22단계)
+6. `src/main/design/orgi.png`(1024x1024 원본 참조 목업) — 선택사항, 빌드 결과물에는 미포함, 좌표 비율 참고용으로만 필요(5-2 정식 좌표표가 있으므로 사실상 불필요)
+
+### 4-2. 스캐폴드 잔재 (빌드에 불필요, 정리 대상)
+- `watchface/src/main/res/drawable/hour.xml`, `minute.xml`, `second.xml` — 아날로그 시계바늘용 VectorDrawable 3종, 현재 디지털 시계(DigitalClock/TimeText) 방식이라 어디서도 참조 안 됨. 새로 만들 때 생성할 필요 없음
+- `assets/`(root, 빈 폴더) — 위 4번 참조, 정리 대상
+
+### 4-3. watchface.xml 기타 확정 설정 (재현 시 누락 주의)
+- `<Metadata key="CLOCK_TYPE" value="DIGITAL" />` — 아날로그 시계바늘 미사용 명시
+- `<Metadata key="PREVIEW_TIME" value="17:10:37" />` — 워치페이스 목록 썸네일에 쓰이는 고정 미리보기 시각(하드코딩 확정값)
+- Scene 최상위 `backgroundColor="#000000"`(배경 이미지 아래 깔리는 기본 검정)
+
 ## 5. 화면 레이아웃 스펙 (원형 캔버스 기준, 위→아래, 데모 이미지 다수 라운드 검수로 확정)
 - 전체 원칙: 빈 공간 최소화하며 꽉 차게 배치하되, 개별 요소를 과도하게 키우지 않을 것(가독성과 균형 우선)
 1. 알림 점: 읽지 않은 알림 있을 때만 표시(없으면 숨김), 좌측 빈공간(중단 좌측 콤플리케이션 바깥, 원 세로 중앙 높이)으로 위치 변경 확정(기존 최상단 중앙에서 이동) — 점 바로 밑에 읽지 않은 알림 개수(숫자)도 같은 표시조건으로 병기
-1-1. 최고/최저 기온: 알림 점이 빠지면서 비게 된 최상단 중앙에 배치, 위치기반 오늘 최고/최저 기온 표시(하드코딩 금지)
+1-1. 최고/최저 기온: 알림 점이 빠지면서 비게 된 최상단 중앙에 배치, 위치기반 오늘 최고/최저 기온 표시(하드코딩 금지) — 필드 `WEATHER.DAYS.0.TEMPERATURE_LOW`/`WEATHER.DAYS.0.TEMPERATURE_HIGH` 확정(DAY_TEMPERATURE_LOW/HIGH 형태 아님), 화씨→섭씨 변환 분기 포함
 1-2. 강수확률: 우측 빈공간(중단 우측 콤플리케이션 바깥, 원 세로 중앙 높이)에 우산 아이콘+라벨+퍼센트 3줄로 배치, 위치기반 날씨 데이터 바인딩(하드코딩 금지)
 2. 좌상단: 일출 시각 — SLOT_SUNRISE 콤플리케이션 슬롯 사용, 공식 시스템 데이터소스 SUNRISE_SUNSET 자동 제공(7-1 참조) (※자리 정정: 기존엔 좌측=일몰이었으나 좌측=일출로 변경 확정)
 3. 상단 중앙: 현재 온도 — 위치기반 현지 온도, 섭씨(℃) 고정 원함(2자리 이내). **일출(라벨)/온도/일몰(라벨) 3요소는 1행, 각 시각값/날씨코멘트는 2행**으로 정확히 같은 높이로 정렬(3열×2행 격자 구조, 온도만 유독 크거나 어긋나지 않게). 온도 바로 아래(2행)에 날씨 조건 한글 코멘트 1줄 추가 — **WEATHER.CONDITION 값에 따라 자동 전환(하드코딩 금지)**, 매핑표는 `docs/weather_icons.md`의 "날씨 코멘트 매핑" 표 참조(예시로 든 "대체로 흐림"은 PARTLY_CLOUDY 하나의 케이스일 뿐, 16개 코드 전부 매핑할 것). **한글 고정(공백 포함 최대 6자, 매핑표 문구 그대로 사용)**, 레이아웃 폭 초과 방지용 제약이라 새 문구 임의 추가 금지
@@ -69,7 +88,7 @@
 13. 하단 알약1: 워치 배터리(%) — **독립된 타원형 3개**(하나로 합친 바 아님, 최종 원복 확정), 타원 내부에 타이틀(예: "워치 배터리")+아이콘+값 2줄 구성. 타원 배경은 반투명이되 충분히 진하게(주/야간 배경 모두에서 타원 경계가 보여야 함, 얇은 밝은 테두리 1px 병행), 텍스트는 밝은 민트 계열(흰색·요일색·온도색과 겹치지 않는 미사용 색상)
     - **아이콘/값 배치 규칙**: 아이콘은 타원 내 좌측 고정, 값(숫자)은 우측 정렬 — 자릿수가 늘어나도 아이콘 위치는 흔들리지 않고 값만 오른쪽 기준으로 왼쪽으로 확장
     - **박스 크기 통일 확정(재정정)**: 3개 알약 전부 동일 96×44px(기존 차등폭 폐기) — 걸음수(999999, 6자리) 기준으로 폭 산출, 원형 화면 안전범위(x=65~373, 실측 검증됨) 안에 3개+간격10px로 배치
-    - **정렬 방식 차등 확정**: 배터리/심박수는 값(숫자) **가운데 정렬**(아이콘 오른쪽 남는 공간 기준 중앙), 걸음수만 자릿수 변동폭이 커서 값 **오른쪽 정렬**(알약 우측 테두리에서 14px 여백 고정, 23단계 재확정) — 자릿수 바뀌어도 우측 기준점 고정
+    - **정렬 방식 차등 확정**: 배터리/심박수는 값(숫자) **가운데 정렬**(아이콘 오른쪽 남는 공간 기준 중앙), 걸음수만 자릿수 변동폭이 커서 값 **오른쪽 정렬**(알약 우측 테두리에서 14px 여백 고정, 기존 6px에서 확대 — 24단계) — 자릿수 바뀌어도 우측 기준점 고정
     - 아이콘과 값(텍스트)은 세로 중심 높이 동일하게 정렬(아이콘 세로 중앙 = 값 텍스트 세로 중앙)
 14. 하단 알약2: 삼성 헬스 걸음 수 — 알약1과 동일 스타일(독립 타원, 타이틀 내장), 폭은 위 96px 통일 규칙 적용, 값은 오른쪽 정렬
 15. 하단 알약3: 심박수(HEART_RATE) 단독 확정(스트레스 미구현) — 알약1/2와 동일 스타일, 폭은 위 96px 통일 규칙 적용, 값은 가운데 정렬
@@ -80,12 +99,12 @@
 ### 5-2. 정확한 좌표 스펙표 (438x438 캔버스 실측값, demo.html 기준 — orgi.png와 달리 비율환산 불필요, 그대로 x/y/width/height로 사용)
 | 요소 | x | y | width | height | 비고 |
 |---|---|---|---|---|---|
-| 알림 점 | 30 | 214 | 10 | 10 | 좌측 이동 확정(기존 214,8에서 변경) |
+| 알림 점 | 30 | 214 | 10 | 10 | 좌측 이동 확정(기존 214,8에서 변경), 색상 `#FFA726` |
 | 알림 개수 | 10 | 226 | 50 | 14 | 점과 동일 표시조건, 가운데 정렬 |
-| 최고/최저 기온 | 0 | 28 | 438 | 17 | 알림점 이동으로 비워진 상단중앙, 가운데 정렬, 민트 `#C9F7DC` |
+| 최고/최저 기온 | 0 | 28 | 438 | 17 | 알림점 이동으로 비워진 상단중앙, 가운데 정렬, 민트 `#C9F7DC`, 필드 WEATHER.DAYS.0.TEMPERATURE_LOW/HIGH |
 | 강수확률 라벨 | 374 | 186 | 60 | 14 | "강수확률" 고정 텍스트, 가운데 정렬 (겹침버그 수정: 194→186) |
 | 강수확률 아이콘 | 387 | 203 | 34 | 31 | 우산 이미지(`rain_umbrella`) (겹침버그 수정: 198→203) |
-| 강수확률 값 | 374 | 237 | 60 | 16 | "NN%" 형식, 가운데 정렬 (겹침버그 수정: 224→237) |
+| 강수확률 값 | 374 | 237 | 60 | 16 | "NN%" 형식, 가운데 정렬, 색상 `#4FC3F7`+다크아웃라인, 필드 WEATHER.DAYS.0.CHANCE_OF_PRECIPITATION (겹침버그 수정: 224→237) |
 | 일출 라벨 | 71 | 58 | 82 | 26 | 텍스트 "일출" |
 | 온도 값 | 167 | 55 | 104 | 31 | "28°C" |
 | 일몰 라벨 | 285 | 58 | 82 | 26 | 텍스트 "일몰" |
@@ -103,7 +122,7 @@
 | 메인 시계(시:분) | 116 | 254 | 190 | 78 | 배경 박스 없음(텍스트만) |
 | 초 | 311 | 270 | 70 | 70 | 21단계에서 확장된 후 표 미갱신 상태였음 — 23단계 실측 반영(기존 49/50은 폐기) |
 | 알약(워치배터리) | 65 | 340 | 96 | 44 | 값 가운데 정렬 |
-| 알약(걸음수) | 171 | 340 | 96 | 44 | 값 오른쪽 정렬(우측 여백 14px, 값박스 x196/w57), 999999 기준 |
+| 알약(걸음수) | 171 | 340 | 96 | 44 | 값 오른쪽 정렬(우측 여백 14px), 999999 기준 |
 | 알약(심박수) | 277 | 340 | 96 | 44 | 값 가운데 정렬 |
 | 워치이름 텍스트 | 139 | 395 | 160 | 32 | 20단계 결정으로 직선 텍스트(곡선 아님), 가로 중앙정렬(center x=219) |
 
@@ -120,6 +139,11 @@
 - 날짜: 골드 `#FFDDAA`(일출/일몰 라벨과 동일 계열, 시계 흰색과 구분)
 - 하단 알약(배터리/걸음수/심박수) 텍스트: 밝은 민트 `#C9F7DC`, 배경 `rgba(35,26,52,.8)`+테두리 `rgba(255,255,255,.22)` 1px(주/야간 모두 경계 인식 가능하도록 충분히 불투명)
 - 워치이름: 피치/탠 `#F2C9A0` + 다크 아웃라인(stroke) — 검정 단독은 야간 배경에서 가독성 저하로 폐기
+- 알림 점: 주황 `#FFA726`
+- 강수확률 값(%): `#4FC3F7`(요일 '월' 색상과 동일 계열 재사용) + 다크 아웃라인
+- 콤플리케이션 미설정(EMPTY) 플레이스홀더: 원 `#59000000`(35% 불투명 검정), "+" 텍스트 `#B3FFFFFF`(70% 불투명 흰색)
+- Scene 배경 기본색(배경 이미지 아래 깔리는 fallback): `#000000`
+- 메인 시계(시:분) 다크 아웃라인 구현 방식: `TimeText`는 `Outline` 자식 요소를 지원하지 않아서, 동일 텍스트를 8방향(상하좌우+대각선) 1~2px 오프셋으로 검정색 복제 후 그 위에 흰색 원본을 덮어 그리는 방식으로 우회 구현(watchface.xml 768~823행)
 
 ### 6-1-1. 배경 그라디언트 확정값 (색감 컨셉, 실제 배경은 이 톤 기준으로 이미지 생성)
 - Day: `linear-gradient(160deg, #6f52b0 0%, #9c4f9c 40%, #c05f79 68%, #cf7d5a 100%)` + 상단 하이라이트 `radial-gradient(circle at 50% 8%, rgba(255,196,130,.4), transparent 40%)`
@@ -175,24 +199,42 @@
 
 ### 7-2. 직접 데이터 바인딩 (ComplicationSlot 아님, 슬롯 한도에 포함 안 됨)
 - 날씨(온도/아이콘, 일출·일몰 제외): `[WEATHER.*]` expression — WEATHER.*에는 sunrise/sunset 없음, 온도 단위 강제(℃) 가능 여부는 빌드 단계 확인
+- 최고/최저 기온: `WEATHER.DAYS.0.TEMPERATURE_LOW` / `WEATHER.DAYS.0.TEMPERATURE_HIGH` 확정 사용(watchface.xml 4곳, 화씨→섭씨 변환 분기 포함) — WEATHER.DAY_TEMPERATURE_LOW/HIGH(비배열 형태)는 미사용
+- 강수확률: `WEATHER.DAYS.0.CHANCE_OF_PRECIPITATION` 확정 사용(비배열 형태 WEATHER.CHANCE_OF_PRECIPITATION 아님 — 21-15단계 최초 지시 문구와 실제 구현이 다름, 실제 코드 기준으로 정정)
+- 주/야간 분기: `WEATHER.IS_DAY` — 날씨 아이콘/날씨 관련 색상 등 day/night 조건분기 전반에 사용
+- 온도 단위 변환: `WEATHER.TEMPERATURE_UNIT` 값으로 화씨/섭씨 분기 처리 후 필요시 변환식 적용
 - 워치 배터리: `BATTERY_PERCENT` SourceType
 - 걸음수: `STEP_COUNT` SourceType
 - 심박수: `HEART_RATE` SourceType (WFF 자체 시스템 SourceType, 별도 SDK 연동 아님)
 - 스트레스 지수: 공식 SourceType 미지원 확정(제외) — 하단 알약3은 심박수 단독, 배터리/걸음수 알약과 동일하게 아이콘+값 구성으로 채움
+- 알림 개수: `UNREAD_NOTIFICATION_COUNT`
+- 날짜: 시스템 날짜 필드 `YEAR`/`MONTH`/`DAY`
+- 요일: 시스템 필드 `DAY_OF_WEEK`
+- 오전/오후: 시스템 필드 `AMPM_STATE`
+- 콤플리케이션 아이콘 틴트: `tintColor="#FFFFFFFF"`(흰색 통일) 4곳 사용 확인 — 기능상 필요(아이콘 원본 색과 무관하게 통일된 흰색으로 표시), 21-17-6 점검에서 제거 비권장 결론
 
 ## 8. 빌드/패키징 정보
-- applicationId(패키지명): `com.keingma.watch` (확정 — `watchface/build.gradle.kts` 실제 값과 다르면 이 값으로 수정)
+- applicationId(패키지명): `com.keingma.watch` (배포 패키지명, 확정)
+- namespace(코드/R클래스용): `com.galaxywatch8.watchface` (`watchface/build.gradle.kts:6`) — applicationId와 다른 값이나 Android에서 둘이 다른 건 정상(별개 용도). 단, 이 값이 스캐폴드 기본값 그대로 남은 건지 의도한 값인지는 미확인 — 문제는 없지만 참고
+- rootProject.name: `GalaxyWatch8ClassicWatchFace` (`settings.gradle.kts:16`)
+- AndroidManifest.xml: `<uses-feature android:name="android.hardware.type.watch" />`, `<meta-data android:name="com.google.android.wearable.standalone" android:value="true" />`, `<application android:label="@string/watch_face_name" android:icon="@drawable/preview" android:hasCode="false">`
+- `strings.xml`의 `watch_face_name` = **"바람개비 워치8 클래식"**(확정, 기존 스캐폴드 기본값 "GalaxyWatch8 Classic Analog"에서 변경) — 즐겨찾기 목록에 뜨는 앱 라벨, watchface.xml 내부 렌더링 텍스트(5번-16)와 동일 문자열로 통일
 - minSdk 34 (WFF v2 요구사항) 고정 — 33이면 WFF v2 최소요구 미달이라 34로 수정 필요
 - targetSdk/compileSdk: 재빌드 시점마다 최신 버전으로 갱신(현재 36 제안), minSdk는 유지
 - versionCode 1 / versionName "1.0" (시작값, "1.0.0" 아님)
 - keystore(서명): 지금 정할 필요 없음 — 실제 빌드 단계에서 생성
 - 런처 아이콘(워치페이스 목록 썸네일): 완료 — 22단계로 fast-track 처리됨, `watchface/src/main/res/drawable/preview.png`(실제 워치페이스 캡처, 래스터) + `watch_face_info.xml`의 `<Preview value="@drawable/preview" />` 등록 완료
+- `watch_face_info.xml`의 `<Editable value="true" />` 필수(기본값 false — 없으면 편집화면 진입 불가, 21-16-3 확인)
+- AndroidManifest.xml `android:hasCode="false"` 필수(WFF는 코드 없이 리소스만 포함하는 게 정상)
+- watch_face_info.xml 기타 확정값: `<Category value="CATEGORY_EMPTY" />`, `<AvailableInRetail value="false" />`, `<MultipleInstancesAllowed value="false" />`, `<FlavorsSupported value="false" />`
+- release 빌드타입: `isMinifyEnabled=false`, `isShrinkResources=false`
 
 ## 9. 미확정/보류 항목
 - 날씨 아이콘 32종 전부 매핑 완료(예비 없음, `docs/weather_icons.md` 참조) — 단 FOG/MIST/LIGHT_SNOW/UNKNOWN 4개 코드는 원래 컨셉과 다른 그림을 근사치로 재배정한 것이라 실제 렌더 확인 시 어색하면 재조정 가능
 - 걸음수/심박수: WFF 자체 SourceType으로 제공되며 삼성헬스 SDK를 직접 연동하지 않음. 권한 요구 여부 및 처리 방식은 구현/실기기 테스트에서 확인. 스트레스 지수만 시스템 콤플리케이션/우회 존재 여부 실기기 테스트에서 확인
 - AOD 초(seconds) 표시: 제외로 확정(구글 공식 원칙상 ambient 1분 단위 갱신 — 5-1 참조)
 - **일출/일몰 데이터소스**: `SUNRISE_SUNSET`은 구글 공식 Wear OS 시스템 데이터소스로 확인됨(WFF `DefaultProviderPolicy.defaultSystemProvider`, Wear OS 4+). 다만 일부 구형 기기/삼성 자체 툴(Watch Face Studio) 관련 커뮤니티 보고 사례가 있었으므로, 실기기(갤럭시 워치8 클래식)에서 실제 값이 정상 갱신되는지는 6-6 테스트 단계에서 최종 확인
+- **콤플리케이션 개별 탭→앱 선택 피커**: 에뮬레이터(uiautomator)에서는 개별 탭 타겟 노출이 안 돼서 확인 불가(실제 미구현인지 AVD 한계인지 불명확) — 실기기에서 최종 확인 필요(개발_지시서.md 12단계)
 
 ## 10. 작업 방식 규칙 (Claude Code CLI 대상)
 - 요청 범위 외 리팩토링 금지
@@ -214,3 +256,8 @@
 - [Optimize your watch face design | Samsung Developer](https://developer.samsung.com/codelab/watch-face-studio/design-optimization.html)
 - [Always-on in Watch Face Studio | Samsung Developer](https://developer.samsung.com/watch-face-studio/user-guide/always-on.html)
 - [Samsung Galaxy Watch8 Classic - GSMArena](https://www.gsmarena.com/samsung_galaxy_watch8_classic-13998.php)
+- [Set up a watch face project (Editable/Preview) | Android Developers](https://developer.android.com/training/wearables/wff/setup)
+- [Weather data in the Watch Face Format | Android Developers](https://developer.android.com/training/wearables/wff/weather)
+- [Optimize memory usage | Android Developers](https://developer.android.com/training/wearables/wff/memory-usage)
+- [Optimize watch face performance | Android Developers](https://developer.android.com/training/wearables/watch-faces/performance)
+- [google/watchface (Validator, WFF Optimizer) | GitHub](https://github.com/google/watchface)
