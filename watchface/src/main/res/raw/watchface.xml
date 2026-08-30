@@ -129,46 +129,37 @@
             </PartText>
         </Group>
 
-        <!-- 좌상단: 일출, SUNRISE_SUNSET 시스템 콤플리케이션. 5-2 좌표표: x71,y58,82x57(라벨26+값26,gap5). isCustomizable=FALSE로 잠금 -->
+        <!-- 좌상단: 일출/일몰 통합, SUNRISE_SUNSET 시스템 콤플리케이션(다음 이벤트 자동 반영). 5-2 좌표표: x71,y58,82x57(라벨26+값26,gap5).
+             isCustomizable=FALSE로 잠금. 우측 일몰 슬롯 삭제로 이 하나만 남음 — 라벨은 WEATHER.IS_DAY로 낮/밤 전환(값은 COMPLICATION.TEXT 그대로,
+             SUNRISE_SUNSET 프로바이더가 낮엔 다음 일몰, 밤엔 다음 일출 시각을 알아서 넘겨줌) -->
         <ComplicationSlot x="71" y="58" width="82" height="57" slotId="6" name="SLOT_SUNRISE"
-            displayName="일출" supportedTypes="SHORT_TEXT" isCustomizable="FALSE">
+            displayName="일출/일몰" supportedTypes="SHORT_TEXT" isCustomizable="FALSE">
             <Variant mode="AMBIENT" target="alpha" value="0" />
             <BoundingBox x="0" y="0" width="82" height="57" />
             <DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET" defaultSystemProviderType="SHORT_TEXT" />
             <Complication type="SHORT_TEXT">
                 <Group name="group_3" x="0" y="0" width="82" height="57">
-                    <PartText x="0" y="0" width="82" height="26">
-                        <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="16" weight="BOLD" color="#FFB199">
-                                <Outline color="#B3000000" width="1.2" />일출</Font>
-                        </Text>
-                    </PartText>
-                    <PartText x="0" y="31" width="82" height="26">
-                        <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="21" weight="BOLD" color="#FFFFFF">
-                                <Outline color="#B3000000" width="1.5" />
-                                <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
-                            </Font>
-                        </Text>
-                    </PartText>
-                </Group>
-            </Complication>
-        </ComplicationSlot>
-
-        <!-- 우상단: 일몰, SUNRISE_SUNSET 시스템 콤플리케이션. 5-2 좌표표: x285,y58,82x57. isCustomizable=FALSE로 잠금 -->
-        <ComplicationSlot x="285" y="58" width="82" height="57" slotId="5" name="SLOT_SUNSET"
-            displayName="일몰" supportedTypes="SHORT_TEXT" isCustomizable="FALSE">
-            <Variant mode="AMBIENT" target="alpha" value="0" />
-            <BoundingBox x="0" y="0" width="82" height="57" />
-            <DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET" defaultSystemProviderType="SHORT_TEXT" />
-            <Complication type="SHORT_TEXT">
-                <Group name="group_2" x="0" y="0" width="82" height="57">
-                    <PartText x="0" y="0" width="82" height="26">
-                        <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="16" weight="BOLD" color="#C97B5F">
-                                <Outline color="#B3000000" width="1.2" />일몰</Font>
-                        </Text>
-                    </PartText>
+                    <Condition>
+                        <Expressions>
+                            <Expression name="is_day"><![CDATA[[WEATHER.IS_DAY]]]></Expression>
+                        </Expressions>
+                        <Compare expression="is_day">
+                            <PartText x="0" y="0" width="82" height="26">
+                                <Text align="CENTER" verticalAlign="CENTER">
+                                    <Font family="notosanskr_bold" size="16" weight="BOLD" color="#FFB199">
+                                        <Outline color="#B3000000" width="1.2" />일몰</Font>
+                                </Text>
+                            </PartText>
+                        </Compare>
+                        <Default>
+                            <PartText x="0" y="0" width="82" height="26">
+                                <Text align="CENTER" verticalAlign="CENTER">
+                                    <Font family="notosanskr_bold" size="16" weight="BOLD" color="#FFB199">
+                                        <Outline color="#B3000000" width="1.2" />일출</Font>
+                                </Text>
+                            </PartText>
+                        </Default>
+                    </Condition>
                     <PartText x="0" y="31" width="82" height="26">
                         <Text align="CENTER" verticalAlign="CENTER">
                             <Font family="notosanskr_bold" size="21" weight="BOLD" color="#FFFFFF">
