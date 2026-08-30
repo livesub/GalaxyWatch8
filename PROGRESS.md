@@ -3,7 +3,7 @@
 이 파일은 세션 끊길 때(사용량 제한 등) 다음 세션에서 이어서 작업하기 위한 상태 기록임.
 새 세션 시작 시: "CLAUDE.md + PROGRESS.md 확인하고 이어서 해줘" 라고 요청하면 됨.
 
-⚠️ 문제 생기면 이 커밋/태그로 원복: 커밋 `b4f0574` / 태그 `dev-final-stable-v2` (2026-08-29, "fix: 걸음수 알약 우측 여백 14px로 확대(23단계)") — 이전 기준점 `dev-final-before-optimization`(`bbb1fed`)은 21-17 최적화 완료로 대체됨
+⚠️ 문제 생기면 이 커밋/태그로 원복: 커밋 `b9e48c4` / 태그 `dev-final-stable-v3` (2026-08-30, "fix: 즐겨찾기 라벨 한글화") — 이전 기준점 `dev-final-stable-v2`(`b4f0574`)는 즐겨찾기 라벨 한글화로 대체됨
 
 ## 전체 단계 체크리스트
 - [~] 1. 프로젝트 골격 (build.gradle, AndroidManifest.xml, 폴더구조) — 골격만 완료, 디지털 UI 미구현
@@ -533,6 +533,13 @@ watchface.xml 원문 x/y/width/height 그대로 추출해 5-2 표와 대조. 대
 - **결론: 7종 전부 이상 없음**, 커밋 `b4f0574`("fix: 걸음수 알약 우측 여백 14px로 확대(23단계)")
 - CLAUDE.md 5번-13(정렬 방식 차등 확정), 5-2 표(알약 걸음수 행) 텍스트를 6px→14px로 갱신(같은 커밋)
 - **새 안정 기준점 태그 생성**: `dev-final-stable-v2`(커밋 `b4f0574`) → GitHub push 완료. 기존 `dev-final-before-optimization`(`bbb1fed`, 21-17 최적화 시작 전 기준점)은 21-17이 완료·검증됐으므로 이 새 기준점으로 대체. CLAUDE.md/PROGRESS.md 최상단 경고 문구 갱신 완료
+
+## 즐겨찾기 라벨 한글화 + 안정 기준점 갱신 (2026-08-30)
+- 역방향 문서-코드 대조(문서에 없는 코드 항목 스캔) 과정에서 발견: `watch_face_name`(strings.xml, AndroidManifest `android:label` 연결)이 "GalaxyWatch8 Classic Analog"(영문, 스캐폴드 잔재)로 남아있었음 — CLAUDE.md 5번-16이 명시한 화면 내 텍스트 "바람개비 워치8 클래식"과는 별개의 값이라 즐겨찾기(워치페이스 선택/편집) 목록엔 영문 라벨이 뜨고 있었음
+- **변경**: `watchface/src/main/res/values/strings.xml:3` `watch_face_name` 값을 "바람개비 워치8 클래식"으로 교체(다른 파일/속성 무변경)
+- 빌드/설치 후 에뮬레이터에서 워치페이스 편집화면(홈 화면 롱프레스) 진입해 상단 라벨이 "바람개비 워치8 클..."(한글, 말줄임)로 정상 전환된 것 캡처 확인
+- 커밋 `b9e48c4`("fix: 즐겨찾기 라벨 한글화"), 이어서 CLAUDE.md 상단 경고 문구 갱신 커밋 `b1020f6`
+- **새 안정 기준점 태그 생성**: `dev-final-stable-v3`(커밋 `b9e48c4`) → GitHub push 완료(master, 태그 둘 다). 기존 `dev-final-stable-v2`(`b4f0574`)는 이 기준점으로 대체. CLAUDE.md 최상단 경고 문구 갱신 완료
 
 ## 이슈/보류 메모
 - 스트레스 지수: 구현 시도 결과 → (성공/실패 기록)
