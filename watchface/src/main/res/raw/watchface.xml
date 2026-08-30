@@ -662,61 +662,82 @@
                 <Expression name="is_sat"><![CDATA[[DAY_OF_WEEK] == 7]]></Expression>
             </Expressions>
             <Compare expression="is_mon">
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#4FC3F7">
-                            <Outline color="#B3000000" width="1.5" />월</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#4FC3F7">월</Font></Text></PartText>
             </Compare>
             <Compare expression="is_tue">
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#8BC34A">
-                            <Outline color="#B3000000" width="1.5" />화</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">화</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#8BC34A">화</Font></Text></PartText>
             </Compare>
             <Compare expression="is_wed">
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#FFD54F">
-                            <Outline color="#B3000000" width="1.5" />수</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">수</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#FFD54F">수</Font></Text></PartText>
             </Compare>
             <Compare expression="is_thu">
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#FF8A50">
-                            <Outline color="#B3000000" width="1.5" />목</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">목</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#FF8A50">목</Font></Text></PartText>
             </Compare>
             <Compare expression="is_fri">
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#F06292">
-                            <Outline color="#B3000000" width="1.5" />금</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">금</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#F06292">금</Font></Text></PartText>
             </Compare>
             <Compare expression="is_sat">
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#42A5F5">
-                            <Outline color="#B3000000" width="1.5" />토</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">토</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#42A5F5">토</Font></Text></PartText>
             </Compare>
             <Default>
                 <!-- DAY_OF_WEEK == 1 (일요일) -->
-                <PartText x="285" y="227" width="40" height="32">
-                    <Text align="START" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="25" weight="BOLD" color="#EF5350">
-                            <Outline color="#B3000000" width="1.5" />일</Font>
-                    </Text>
-                </PartText>
+                <PartText x="283" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="285" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="287" y="225" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="283" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="287" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="283" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="285" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="287" y="229" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#D9000000">일</Font></Text></PartText>
+                <PartText x="285" y="227" width="40" height="32"><Text align="START" verticalAlign="CENTER"><Font family="notosanskr_bold" size="25" weight="BOLD" color="#EF5350">일</Font></Text></PartText>
             </Default>
         </Condition>
         </Group>
