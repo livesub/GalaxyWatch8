@@ -30,8 +30,8 @@
             </Condition>
         </Group>
 
-        <!-- 좌측 원 바깥 세로중앙: 안읽은 알림 점(dot, x30 y214 10x10) + 알림 개수(x10 y226 50x14).
-             점/개수 둘 다 UNREAD_NOTIFICATION_COUNT 동일 조건으로 표시/숨김 동기화. AOD에선 숨김(5-1) -->
+        <!-- 좌측 원 바깥 세로중앙: 안읽은 알림 개수(x20 y207 30x20). 점(dot) 삭제, 개수 텍스트가 그 자리로 이동.
+             UNREAD_NOTIFICATION_COUNT 조건으로 표시/숨김. AOD에선 숨김(5-1) -->
         <Group name="group_28" x="0" y="0" width="438" height="438">
             <Variant mode="AMBIENT" target="alpha" value="0" />
             <Condition>
@@ -39,12 +39,9 @@
                     <Expression name="has_unread"><![CDATA[[UNREAD_NOTIFICATION_COUNT] > 0]]></Expression>
                 </Expressions>
                 <Compare expression="has_unread">
-                    <PartDraw x="30" y="214" width="10" height="10">
-                        <Ellipse x="0" y="0" width="10" height="10"><Fill color="#FFA726" /></Ellipse>
-                    </PartDraw>
-                    <PartText x="10" y="226" width="50" height="14">
+                    <PartText x="20" y="207" width="30" height="20">
                         <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="11" weight="BOLD" color="#FFFFFF">
+                            <Font family="notosanskr_bold" size="15" weight="BOLD" color="#FFFFFF">
                                 <Outline color="#B3000000" width="1" />
                                 <Template><![CDATA[%d]]><Parameter expression="[UNREAD_NOTIFICATION_COUNT]" /></Template>
                             </Font>
@@ -52,12 +49,9 @@
                     </PartText>
                 </Compare>
                 <Default>
-                    <PartDraw x="30" y="214" width="10" height="10" alpha="0">
-                        <Ellipse x="0" y="0" width="10" height="10"><Fill color="#FFA726" /></Ellipse>
-                    </PartDraw>
-                    <PartText x="10" y="226" width="50" height="14" alpha="0">
+                    <PartText x="20" y="207" width="30" height="20" alpha="0">
                         <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="11" weight="BOLD" color="#FFFFFF">
+                            <Font family="notosanskr_bold" size="15" weight="BOLD" color="#FFFFFF">
                                 <Outline color="#B3000000" width="1" />
                                 <Template><![CDATA[%d]]><Parameter expression="[UNREAD_NOTIFICATION_COUNT]" /></Template>
                             </Font>
@@ -119,9 +113,9 @@
             <PartImage x="387" y="203" width="34" height="31">
                 <Image resource="rain_umbrella" />
             </PartImage>
-            <PartText x="374" y="237" width="60" height="16">
+            <PartText x="367" y="235" width="74" height="22">
                 <Text align="CENTER" verticalAlign="CENTER">
-                    <Font family="notosanskr_bold" size="13" weight="BOLD" color="#4FC3F7">
+                    <Font family="notosanskr_bold" size="17" weight="BOLD" color="#4FC3F7">
                         <Outline color="#B3000000" width="1.2" />
                         <Template><![CDATA[%.0f%%]]><Parameter expression="[WEATHER.DAYS.0.CHANCE_OF_PRECIPITATION]" /></Template>
                     </Font>
@@ -171,6 +165,85 @@
                 </Group>
             </Complication>
         </ComplicationSlot>
+
+        <!-- 달의 위상(구 일몰 자리, x285 y58 82x57). MOON_PHASE_TYPE(0~7) SourceType, WFF 공식 renderMode="MASK" 방식
+             (Mask 요소는 미존재, 사용 금지). 배경=어두운달(moon_nc) 항상 전체노출, 그 위에 밝은달(moon_qgf)을
+             사각형 마스크로 위상만큼만 노출. TYPE1~4는 마스크 우측정렬(x+w=50 고정), TYPE5~7은 좌측정렬(x=0 고정) -->
+        <Group name="moon_phase" x="285" y="58" width="82" height="57">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_nc" /></PartImage>
+            <Condition>
+                <Expressions>
+                    <Expression name="moon_0"><![CDATA[[MOON_PHASE_TYPE] == 0]]></Expression>
+                    <Expression name="moon_1"><![CDATA[[MOON_PHASE_TYPE] == 1]]></Expression>
+                    <Expression name="moon_2"><![CDATA[[MOON_PHASE_TYPE] == 2]]></Expression>
+                    <Expression name="moon_3"><![CDATA[[MOON_PHASE_TYPE] == 3]]></Expression>
+                    <Expression name="moon_4"><![CDATA[[MOON_PHASE_TYPE] == 4]]></Expression>
+                    <Expression name="moon_5"><![CDATA[[MOON_PHASE_TYPE] == 5]]></Expression>
+                    <Expression name="moon_6"><![CDATA[[MOON_PHASE_TYPE] == 6]]></Expression>
+                </Expressions>
+                <Compare expression="moon_0">
+                    <!-- 신월: 밝은달 미표시(전체 어두운달만) -->
+                </Compare>
+                <Compare expression="moon_1">
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="43" y="0" width="7" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="7" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Compare>
+                <Compare expression="moon_2">
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="25" y="0" width="25" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="25" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Compare>
+                <Compare expression="moon_3">
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="7" y="0" width="43" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="43" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Compare>
+                <Compare expression="moon_4">
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="0" y="0" width="50" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="50" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Compare>
+                <Compare expression="moon_5">
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="0" y="0" width="43" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="43" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Compare>
+                <Compare expression="moon_6">
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="0" y="0" width="25" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="25" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Compare>
+                <Default>
+                    <!-- TYPE=7 그믐달 -->
+                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
+                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
+                        <PartDraw x="0" y="0" width="7" height="50" renderMode="MASK">
+                            <Rectangle x="0" y="0" width="7" height="50"><Fill color="#FFFFFF" /></Rectangle>
+                        </PartDraw>
+                    </Group>
+                </Default>
+            </Condition>
+        </Group>
 
         <!-- 온도(1행, x167 y55 104x31) + 날씨 코멘트(2행, x167 y93 104x18). 5-2 좌표표 반영.
              WEATHER.TEMPERATURE_UNIT 기준 섭씨 강제 변환. AOD에선 숨김(5-1) -->
@@ -398,10 +471,12 @@
         </Condition>
         </Group>
 
-        <!-- 6~9번 4개 슬롯 미설정 플레이스홀더(다크 원+"+")를 ComplicationSlot과 무관하게 직접 그림.
-             App Shortcut류는 미설정 시 시스템이 EMPTY/NOT_CONFIGURED 어느 쪽도 요청하지 않아 화면에 아무것도
-             안 그려지는 경우가 확인되어, 슬롯 밑에 항상 그려두고 실제 콘텐츠가 위에 덮이도록 처리.
-             5-2 좌표표: 콤플리케이션 4개 52x52. AOD에선 슬롯과 함께 숨김 -->
+        <!-- App Shortcut 3개 슬롯(TOP_LEFT/TOP_RIGHT/MID_RIGHT) 전용 미설정 플레이스홀더(다크 원+"+").
+             실기기 검증 결과(2026-08-30): App Shortcut 슬롯은 미설정 시 EMPTY 타입도 호출되지 않아 화면에
+             아무것도 안 그려짐(진짜 빈 화면) 확인 → 이 3개 슬롯만 별도 폴백 유지 필요.
+             MID_LEFT(데이터 슬롯, DefaultProviderPolicy=EMPTY)는 EMPTY 타입이 정상적으로 호출되는 것을 실기기에서
+             확인(자체 EMPTY 콤플리케이션 브랜치로 충분) → 폴백에서 제외, 값 표시 시 "+" 비침 버그 해결.
+             5-2 좌표표: 콤플리케이션 52x52. AOD에선 슬롯과 함께 숨김 -->
         <Group name="group_placeholder" x="0" y="0" width="438" height="438">
             <Variant mode="AMBIENT" target="alpha" value="0" />
             <PartDraw x="70" y="130" width="52" height="52">
@@ -416,12 +491,6 @@
             <PartText x="316" y="130" width="52" height="52">
                 <Text align="CENTER"><Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font></Text>
             </PartText>
-            <PartDraw x="70" y="200" width="52" height="52">
-                <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
-            </PartDraw>
-            <PartText x="70" y="200" width="52" height="52">
-                <Text align="CENTER"><Font family="notosanskr_bold" size="28" weight="BOLD" color="#B3FFFFFF">+</Font></Text>
-            </PartText>
             <PartDraw x="316" y="200" width="52" height="52">
                 <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
             </PartDraw>
@@ -434,7 +503,7 @@
         <ComplicationSlot x="70" y="130" width="52" height="52" slotId="1" name="SLOT_TOP_LEFT"
             displayName="차량 앱 바로가기" supportedTypes="MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
             <Variant mode="AMBIENT" target="alpha" value="0" />
-            <BoundingOval x="0" y="0" width="52" height="52" />
+            <BoundingOval x="-6" y="-6" width="64" height="64" />
             <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="MONOCHROMATIC_IMAGE" />
             <Complication type="MONOCHROMATIC_IMAGE">
                 <Group name="group_6" x="0" y="0" width="52" height="52">
@@ -475,7 +544,7 @@
         <ComplicationSlot x="316" y="130" width="52" height="52" slotId="2" name="SLOT_TOP_RIGHT"
             displayName="AI 어시스턴트 바로가기" supportedTypes="MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
             <Variant mode="AMBIENT" target="alpha" value="0" />
-            <BoundingOval x="0" y="0" width="52" height="52" />
+            <BoundingOval x="-6" y="-6" width="64" height="64" />
             <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="MONOCHROMATIC_IMAGE" />
             <Complication type="MONOCHROMATIC_IMAGE">
                 <Group name="group_10" x="0" y="0" width="52" height="52">
@@ -516,7 +585,7 @@
         <ComplicationSlot x="70" y="200" width="52" height="52" slotId="3" name="SLOT_MID_LEFT"
             displayName="데이터 슬롯" supportedTypes="SHORT_TEXT RANGED_VALUE MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
             <Variant mode="AMBIENT" target="alpha" value="0" />
-            <BoundingOval x="0" y="0" width="52" height="52" />
+            <BoundingOval x="-6" y="-6" width="64" height="64" />
             <DefaultProviderPolicy defaultSystemProvider="EMPTY" defaultSystemProviderType="EMPTY" />
             <!-- 미설정 상태: 다른 3개 콤플리케이션과 동일하게 다크 배경 원 + 안내 아이콘("+")로 통일 -->
             <Complication type="EMPTY">
@@ -587,7 +656,7 @@
         <ComplicationSlot x="316" y="200" width="52" height="52" slotId="4" name="SLOT_MID_RIGHT"
             displayName="음성녹음 바로가기" supportedTypes="MONOCHROMATIC_IMAGE SMALL_IMAGE EMPTY" isCustomizable="TRUE">
             <Variant mode="AMBIENT" target="alpha" value="0" />
-            <BoundingOval x="0" y="0" width="52" height="52" />
+            <BoundingOval x="-6" y="-6" width="64" height="64" />
             <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="MONOCHROMATIC_IMAGE" />
             <Complication type="MONOCHROMATIC_IMAGE">
                 <Group name="group_18" x="0" y="0" width="52" height="52">
@@ -629,7 +698,7 @@
         <PartText x="120" y="227" width="160" height="32">
             <Variant mode="AMBIENT" target="alpha" value="0" />
             <Text align="END" verticalAlign="CENTER">
-                <Font family="notosanskr_bold" size="25" weight="BOLD" color="#FFDDAA">
+                <Font family="notosanskr_bold" size="28" weight="BOLD" color="#FFDDAA">
                     <Outline color="#B3000000" width="1.5" />
                     <Template><![CDATA[%04d.%02d.%02d]]>
                         <Parameter expression="[YEAR]" />
