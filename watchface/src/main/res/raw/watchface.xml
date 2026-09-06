@@ -166,12 +166,10 @@
             </Complication>
         </ComplicationSlot>
 
-        <!-- 달의 위상(구 일몰 자리, x285 y58 82x57). MOON_PHASE_TYPE(0~7) SourceType, WFF 공식 renderMode="MASK" 방식
-             (Mask 요소는 미존재, 사용 금지). 배경=어두운달(moon_nc) 항상 전체노출, 그 위에 밝은달(moon_qgf)을
-             사각형 마스크로 위상만큼만 노출. TYPE1~4는 마스크 우측정렬(x+w=50 고정), TYPE5~7은 좌측정렬(x=0 고정) -->
+        <!-- 달의 위상(구 일몰 자리, x285 y58 82x57). MOON_PHASE_TYPE(0~7) 이미지 스위칭 방식(2026-09-06 재구현,
+             기존 moon_qgf/moon_nc + 사각형 슬라이딩 MASK 근사 폐기 — 실제 위상별 이미지 7종으로 교체) -->
         <Group name="moon_phase" x="285" y="58" width="82" height="57">
             <Variant mode="AMBIENT" target="alpha" value="0" />
-            <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_nc" /></PartImage>
             <Condition>
                 <Expressions>
                     <Expression name="moon_0"><![CDATA[[MOON_PHASE_TYPE] == 0]]></Expression>
@@ -183,63 +181,94 @@
                     <Expression name="moon_6"><![CDATA[[MOON_PHASE_TYPE] == 6]]></Expression>
                 </Expressions>
                 <Compare expression="moon_0">
-                    <!-- 신월: 밝은달 미표시(전체 어두운달만) -->
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_00_new" /></PartImage>
                 </Compare>
                 <Compare expression="moon_1">
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="43" y="0" width="7" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="7" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
-                    </Group>
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_01_crescent_waxing" /></PartImage>
                 </Compare>
                 <Compare expression="moon_2">
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="25" y="0" width="25" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="25" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
-                    </Group>
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_02_quarter_waxing" /></PartImage>
                 </Compare>
                 <Compare expression="moon_3">
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="7" y="0" width="43" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="43" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
-                    </Group>
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_03_gibbous_waxing" /></PartImage>
                 </Compare>
                 <Compare expression="moon_4">
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="0" y="0" width="50" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="50" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
-                    </Group>
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_04_full" /></PartImage>
                 </Compare>
                 <Compare expression="moon_5">
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="0" y="0" width="43" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="43" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
-                    </Group>
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_05_gibbous_waning" /></PartImage>
                 </Compare>
                 <Compare expression="moon_6">
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="0" y="0" width="25" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="25" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_06_quarter_waning" /></PartImage>
+                </Compare>
+                <Default>
+                    <!-- TYPE=7 그믐달 -->
+                    <PartImage x="16" y="3" width="50" height="50"><Image resource="moon_07_crescent_waning" /></PartImage>
+                </Default>
+            </Condition>
+        </Group>
+
+        <!-- 달의 위상 라벨(2글자 세로쌓기), MOON_PHASE_TYPE(0~7) 8단계 텍스트 매핑.
+             달 아이콘(x301,y61,50x50) 왼쪽, 글자당 25px 배분(중심 x286). AOD에선 숨김(5-1) -->
+        <Group name="moon_phase_label" x="271" y="61" width="30" height="50">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Condition>
+                <Expressions>
+                    <Expression name="mlbl_0"><![CDATA[[MOON_PHASE_TYPE] == 0]]></Expression>
+                    <Expression name="mlbl_1"><![CDATA[[MOON_PHASE_TYPE] == 1]]></Expression>
+                    <Expression name="mlbl_2"><![CDATA[[MOON_PHASE_TYPE] == 2]]></Expression>
+                    <Expression name="mlbl_3"><![CDATA[[MOON_PHASE_TYPE] == 3]]></Expression>
+                    <Expression name="mlbl_4"><![CDATA[[MOON_PHASE_TYPE] == 4]]></Expression>
+                    <Expression name="mlbl_5"><![CDATA[[MOON_PHASE_TYPE] == 5]]></Expression>
+                    <Expression name="mlbl_6"><![CDATA[[MOON_PHASE_TYPE] == 6]]></Expression>
+                </Expressions>
+                <Compare expression="mlbl_0">
+                    <Group name="moon_lbl_0" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">신</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">월</Font></Text></PartText>
+                    </Group>
+                </Compare>
+                <Compare expression="mlbl_1">
+                    <Group name="moon_lbl_1" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">초</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">승</Font></Text></PartText>
+                    </Group>
+                </Compare>
+                <Compare expression="mlbl_2">
+                    <Group name="moon_lbl_2" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">상</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">현</Font></Text></PartText>
+                    </Group>
+                </Compare>
+                <Compare expression="mlbl_3">
+                    <Group name="moon_lbl_3" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">차</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">다</Font></Text></PartText>
+                    </Group>
+                </Compare>
+                <Compare expression="mlbl_4">
+                    <Group name="moon_lbl_4" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">보</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">름</Font></Text></PartText>
+                    </Group>
+                </Compare>
+                <Compare expression="mlbl_5">
+                    <Group name="moon_lbl_5" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">지</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">다</Font></Text></PartText>
+                    </Group>
+                </Compare>
+                <Compare expression="mlbl_6">
+                    <Group name="moon_lbl_6" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">하</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">현</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Default>
                     <!-- TYPE=7 그믐달 -->
-                    <Group name="moon_lit" x="16" y="3" width="50" height="50">
-                        <PartImage x="0" y="0" width="50" height="50"><Image resource="moon_qgf" /></PartImage>
-                        <PartDraw x="0" y="0" width="7" height="50" renderMode="MASK">
-                            <Rectangle x="0" y="0" width="7" height="50"><Fill color="#FFFFFF" /></Rectangle>
-                        </PartDraw>
+                    <Group name="moon_lbl_7" x="0" y="0" width="30" height="50">
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">그</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">믐</Font></Text></PartText>
                     </Group>
                 </Default>
             </Condition>
@@ -510,9 +539,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
-                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_6_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <Complication type="SMALL_IMAGE">
@@ -520,9 +554,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="6" y="6" width="40" height="40">
-                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_7_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="6" y="6" width="40" height="40">
+                            <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <!-- 미설정 상태(App Shortcut 미지정): 다크 배경 원 + 안내 아이콘("+") -->
@@ -551,9 +590,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
-                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_10_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <Complication type="SMALL_IMAGE">
@@ -561,9 +605,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="6" y="6" width="40" height="40">
-                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_11_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="6" y="6" width="40" height="40">
+                            <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <!-- 미설정 상태(App Shortcut 미지정): 다크 배경 원 + 안내 아이콘("+") -->
@@ -635,9 +684,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
-                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_16_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <Complication type="SMALL_IMAGE">
@@ -645,9 +699,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="6" y="6" width="40" height="40">
-                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_17_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="6" y="6" width="40" height="40">
+                            <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
         </ComplicationSlot>
@@ -663,9 +722,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
-                        <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_18_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="9" y="9" width="34" height="34" tintColor="#FFFFFFFF">
+                            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <Complication type="SMALL_IMAGE">
@@ -673,9 +737,14 @@
                     <PartDraw x="0" y="0" width="52" height="52">
                         <Ellipse x="0" y="0" width="52" height="52"><Fill color="#59000000" /></Ellipse>
                     </PartDraw>
-                    <PartImage x="6" y="6" width="40" height="40">
-                        <Image resource="[COMPLICATION.SMALL_IMAGE]" />
-                    </PartImage>
+                    <Group name="group_19_mask" x="0" y="0" width="52" height="52">
+                        <PartImage x="6" y="6" width="40" height="40">
+                            <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                        </PartImage>
+                        <PartDraw x="0" y="0" width="52" height="52" renderMode="MASK">
+                            <Ellipse x="0" y="0" width="52" height="52"><Fill color="#FFFFFFFF" /></Ellipse>
+                        </PartDraw>
+                    </Group>
                 </Group>
             </Complication>
             <!-- 미설정 상태(App Shortcut 미지정): 다크 배경 원 + 안내 아이콘("+") -->
@@ -935,10 +1004,10 @@
         </PartDraw>
         <!-- 배터리 아이콘: 이모지/텍스트 렌더러는 단색만 지원되어 컬러 표현 불가 확인 →
              날씨아이콘과 동일하게 컬러 PNG 이미지(icon_battery)로 대체 -->
-        <PartImage x="68" y="350" width="16" height="24">
+        <PartImage x="71" y="349" width="26" height="26">
             <Image resource="icon_battery" />
         </PartImage>
-        <PartText x="89" y="347" width="68" height="30">
+        <PartText x="94" y="347" width="63" height="30">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="notosanskr_bold" size="24" weight="BOLD" color="#C9F7DC">
                     <Outline color="#B3000000" width="1.2" />
@@ -960,7 +1029,7 @@
         </PartDraw>
         <!-- 걸음수 아이콘: 이모지/텍스트 렌더러는 단색만 지원되어 컬러 표현 불가 확인 →
              날씨아이콘과 동일하게 컬러 PNG 이미지(icon_steps)로 대체 -->
-        <PartImage x="179" y="348" width="18" height="28">
+        <PartImage x="177" y="349" width="26" height="26">
             <Image resource="icon_steps" />
         </PartImage>
         <Condition>
@@ -982,7 +1051,7 @@
             <Compare expression="steps_m">
                 <PartText x="196" y="347" width="57" height="30">
                     <Text align="END" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="19" weight="BOLD" color="#C9F7DC">
+                        <Font family="notosanskr_bold" size="21" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
                             <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
                         </Font>
@@ -992,7 +1061,7 @@
             <Compare expression="steps_l">
                 <PartText x="196" y="347" width="57" height="30">
                     <Text align="END" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="14" weight="BOLD" color="#C9F7DC">
+                        <Font family="notosanskr_bold" size="17" weight="BOLD" color="#C9F7DC">
                             <Outline color="#B3000000" width="1.2" />
                             <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
                         </Font>
@@ -1024,7 +1093,7 @@
         </PartDraw>
         <!-- 심박 아이콘: 컬러 이모지도 WFF Text 렌더러에서 단색 렌더 확인 →
              날씨아이콘과 동일하게 컬러 PNG 이미지(icon_heart)로 대체 -->
-        <PartImage x="285" y="347" width="30" height="30">
+        <PartImage x="283" y="349" width="26" height="26">
             <Image resource="icon_heart" />
         </PartImage>
         <PartText x="320" y="347" width="46" height="30">
