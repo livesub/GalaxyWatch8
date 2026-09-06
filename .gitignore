@@ -11,3 +11,4 @@
 *.jks
 *.keystore
 emu_debug.log.*
+emulator_boot.log
