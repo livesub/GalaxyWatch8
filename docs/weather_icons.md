@@ -17,6 +17,8 @@ night_13_rain_crying, night_14_cloud_angry, night_15_rain_beanie_happy, night_16
 
 ⚠️ 정정(2026-08-30): 기존 문서에 night_08이 "snow_beanie_happy"로 잘못 표기돼있었음 — 실제 watchface.xml(376행)이 처음부터 정확히 참조하던 파일은 night_08_snow_beanie_angry였고, happy 파일은 원본 프로젝트에 아예 존재하지 않음(문서 오기로 인해 별도 준비된 것으로 추정). 코드7(SNOW) night는 angry 파일이 정답.
 
+⚠️ 미해결 의심 항목(2026-08-31 발견, CLAUDE.md 9번과 동일 건 교차기록): 코드6 RAIN의 day_06_rain_beanie_sad(비니 있음)와 night_06_rain_sad(비니 없음)가 day/night 짝이 안 맞음(SNOW·HEAVY_SNOW 코드의 비니는 겨울 한정 컨셉이라 문제 없으나 RAIN만 이상). 실기기 여름철 비 오는 날 day 아이콘에 비니가 씌워진 그림이 표시된 것이 이 정상 RAIN(6) 렌더인지, UNKNOWN_VALUE(0) 폴백(day_15_rain_beanie_happy, 마찬가지로 비니 있음)인지 육안 구분 불가 — 온도 간헐 미표시 버그와 동일 원인(WEATHER 데이터소스 간헐 실패→UNKNOWN 폴백) 가능성 있어 다음 세션에서 logcat/dumpsys로 당시 WEATHER.CONDITION 실측값 확인 필요. 확인 후 필요시 day_06 아이콘 재생성(비니 제거).
+
 ## WEATHER.CONDITION 매핑 (WFF 공식 0~15, day/night는 WEATHER.IS_DAY로 분기)
 - **32종 전부 1:1 매핑 확정**(예비/미사용 없음) — 코드 16개=이미지 16개, 겹치지 않게 재배정
 | 코드 | 공식 이름 | day 파일 | night 파일 | 비고 |
@@ -27,7 +29,7 @@ night_13_rain_crying, night_14_cloud_angry, night_15_rain_beanie_happy, night_16
 | 3 | FOG | day_14_cloud_dark_angry | night_14_cloud_angry | 짙은 안개=어둡고 탁한 구름으로 표현(근사치) |
 | 4 | HEAVY_RAIN | day_13_rain_crying | night_13_rain_crying | |
 | 5 | HEAVY_SNOW | day_16_snow_beanie_angry | night_16_snow_beanie_angry2 | |
-| 6 | RAIN | day_06_rain_beanie_sad | night_06_rain_sad | |
+| 6 | RAIN | day_06_rain_beanie_sad | night_06_rain_sad | ⚠️ day/night 비니 불일치 의심(위 안내 참조, 미해결) |
 | 7 | SNOW | day_08_snow_beanie_happy | night_08_snow_beanie_angry | night 파일명 정정됨(위 정정 안내 참조) |
 | 8 | SUNNY | day_04_clear_sun_b | night_04_stars_clear | CLEAR와 구분(맑음 2번째 버전) |
 | 9 | THUNDERSTORM | day_09_thunderstorm | night_09_thunderstorm_angry | |
