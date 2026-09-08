@@ -224,51 +224,179 @@
                 </Expressions>
                 <Compare expression="mlbl_0">
                     <Group name="moon_lbl_0" x="0" y="0" width="30" height="50">
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">신</Font></Text></PartText>
                         <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">신</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">월</Font></Text></PartText>
                         <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">월</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Compare expression="mlbl_1">
                     <Group name="moon_lbl_1" x="0" y="0" width="30" height="50">
-                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">초</Font></Text></PartText>
-                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">승</Font></Text></PartText>
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">초</Font></Text></PartText>
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">초</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">승</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">승</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Compare expression="mlbl_2">
                     <Group name="moon_lbl_2" x="0" y="0" width="30" height="50">
-                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">상</Font></Text></PartText>
-                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">현</Font></Text></PartText>
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">상</Font></Text></PartText>
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">상</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">현</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Compare expression="mlbl_3">
                     <Group name="moon_lbl_3" x="0" y="0" width="30" height="50">
-                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">차</Font></Text></PartText>
-                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#F06292">다</Font></Text></PartText>
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">차</Font></Text></PartText>
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">차</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">다</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Compare expression="mlbl_4">
                     <Group name="moon_lbl_4" x="0" y="0" width="30" height="50">
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">보</Font></Text></PartText>
                         <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">보</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">름</Font></Text></PartText>
                         <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">름</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Compare expression="mlbl_5">
                     <Group name="moon_lbl_5" x="0" y="0" width="30" height="50">
-                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">지</Font></Text></PartText>
-                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">다</Font></Text></PartText>
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">지</Font></Text></PartText>
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">지</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">다</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">다</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Compare expression="mlbl_6">
                     <Group name="moon_lbl_6" x="0" y="0" width="30" height="50">
-                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">하</Font></Text></PartText>
-                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">현</Font></Text></PartText>
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">하</Font></Text></PartText>
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">하</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">현</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">현</Font></Text></PartText>
                     </Group>
                 </Compare>
                 <Default>
                     <!-- TYPE=7 그믐달 -->
                     <Group name="moon_lbl_7" x="0" y="0" width="30" height="50">
-                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">그</Font></Text></PartText>
-                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#4FC3F7">믐</Font></Text></PartText>
+                        <PartText x="-2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="0" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="2" y="-2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="-2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="2" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="-2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="0" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="2" y="2" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">그</Font></Text></PartText>
+                        <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">그</Font></Text></PartText>
+                        <PartText x="-2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="0" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="2" y="23" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="-2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="2" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="-2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="0" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="2" y="27" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#D9000000">믐</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">믐</Font></Text></PartText>
                     </Group>
                 </Default>
             </Condition>
