@@ -290,7 +290,7 @@
                         <Compare expression="temp_hot">
                             <PartText x="167" y="55" width="104" height="31">
                                 <Text align="CENTER" verticalAlign="CENTER">
-                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF3B30">
+                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF6D00">
                                         <Outline color="#B3000000" width="1.5" />
                                         <Template><![CDATA[%.0f°C]]>
                                             <Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" />
@@ -321,7 +321,7 @@
                         <Compare expression="temp_hot">
                             <PartText x="167" y="55" width="104" height="31">
                                 <Text align="CENTER" verticalAlign="CENTER">
-                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF3B30">
+                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF6D00">
                                         <Outline color="#B3000000" width="1.5" />
                                         <Template><![CDATA[%.0f°C]]>
                                             <Parameter expression="[WEATHER.TEMPERATURE]" />
