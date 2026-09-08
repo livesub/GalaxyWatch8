@@ -268,6 +268,7 @@
                     <!-- TYPE=7 그믐달 -->
                     <Group name="moon_lbl_7" x="0" y="0" width="30" height="50">
                         <PartText x="0" y="0" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">그</Font></Text></PartText>
+                        <PartText x="0" y="25" width="30" height="25"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="23" weight="BOLD" color="#FFFFFF">믐</Font></Text></PartText>
                     </Group>
                 </Default>
             </Condition>
