@@ -283,28 +283,66 @@
                     <Expression name="is_fahrenheit"><![CDATA[[WEATHER.TEMPERATURE_UNIT] == 2]]></Expression>
                 </Expressions>
                 <Compare expression="is_fahrenheit">
-                    <PartText x="167" y="55" width="104" height="31">
-                        <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
-                                <Outline color="#B3000000" width="1.5" />
-                                <Template><![CDATA[%.0f°C]]>
-                                    <Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" />
-                                </Template>
-                            </Font>
-                        </Text>
-                    </PartText>
+                    <Condition>
+                        <Expressions>
+                            <Expression name="temp_hot"><![CDATA[(([WEATHER.TEMPERATURE]-32)*5/9) >= 28]]></Expression>
+                        </Expressions>
+                        <Compare expression="temp_hot">
+                            <PartText x="167" y="55" width="104" height="31">
+                                <Text align="CENTER" verticalAlign="CENTER">
+                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF3B30">
+                                        <Outline color="#B3000000" width="1.5" />
+                                        <Template><![CDATA[%.0f°C]]>
+                                            <Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" />
+                                        </Template>
+                                    </Font>
+                                </Text>
+                            </PartText>
+                        </Compare>
+                        <Default>
+                            <PartText x="167" y="55" width="104" height="31">
+                                <Text align="CENTER" verticalAlign="CENTER">
+                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
+                                        <Outline color="#B3000000" width="1.5" />
+                                        <Template><![CDATA[%.0f°C]]>
+                                            <Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" />
+                                        </Template>
+                                    </Font>
+                                </Text>
+                            </PartText>
+                        </Default>
+                    </Condition>
                 </Compare>
                 <Default>
-                    <PartText x="167" y="55" width="104" height="31">
-                        <Text align="CENTER" verticalAlign="CENTER">
-                            <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
-                                <Outline color="#B3000000" width="1.5" />
-                                <Template><![CDATA[%.0f°C]]>
-                                    <Parameter expression="[WEATHER.TEMPERATURE]" />
-                                </Template>
-                            </Font>
-                        </Text>
-                    </PartText>
+                    <Condition>
+                        <Expressions>
+                            <Expression name="temp_hot"><![CDATA[[WEATHER.TEMPERATURE] >= 28]]></Expression>
+                        </Expressions>
+                        <Compare expression="temp_hot">
+                            <PartText x="167" y="55" width="104" height="31">
+                                <Text align="CENTER" verticalAlign="CENTER">
+                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF3B30">
+                                        <Outline color="#B3000000" width="1.5" />
+                                        <Template><![CDATA[%.0f°C]]>
+                                            <Parameter expression="[WEATHER.TEMPERATURE]" />
+                                        </Template>
+                                    </Font>
+                                </Text>
+                            </PartText>
+                        </Compare>
+                        <Default>
+                            <PartText x="167" y="55" width="104" height="31">
+                                <Text align="CENTER" verticalAlign="CENTER">
+                                    <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
+                                        <Outline color="#B3000000" width="1.5" />
+                                        <Template><![CDATA[%.0f°C]]>
+                                            <Parameter expression="[WEATHER.TEMPERATURE]" />
+                                        </Template>
+                                    </Font>
+                                </Text>
+                            </PartText>
+                        </Default>
+                    </Condition>
                 </Default>
             </Condition>
 
