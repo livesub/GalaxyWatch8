@@ -288,6 +288,10 @@
                             <Expression name="temp_hot"><![CDATA[(([WEATHER.TEMPERATURE]-32)*5/9) >= 28]]></Expression>
                         </Expressions>
                         <Compare expression="temp_hot">
+                            <PartText x="166" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
+                            <PartText x="168" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="54" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="56" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
                             <PartText x="167" y="55" width="104" height="31">
                                 <Text align="CENTER" verticalAlign="CENTER">
                                     <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF6D00">
@@ -300,6 +304,10 @@
                             </PartText>
                         </Compare>
                         <Default>
+                            <PartText x="166" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
+                            <PartText x="168" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="54" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="56" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="([WEATHER.TEMPERATURE]-32)*5/9" /></Template></Font></Text></PartText>
                             <PartText x="167" y="55" width="104" height="31">
                                 <Text align="CENTER" verticalAlign="CENTER">
                                     <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
@@ -319,6 +327,10 @@
                             <Expression name="temp_hot"><![CDATA[[WEATHER.TEMPERATURE] >= 28]]></Expression>
                         </Expressions>
                         <Compare expression="temp_hot">
+                            <PartText x="166" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
+                            <PartText x="168" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="54" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="56" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
                             <PartText x="167" y="55" width="104" height="31">
                                 <Text align="CENTER" verticalAlign="CENTER">
                                     <Font family="notosanskr_bold" size="32" weight="BOLD" color="#FF6D00">
@@ -331,6 +343,10 @@
                             </PartText>
                         </Compare>
                         <Default>
+                            <PartText x="166" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
+                            <PartText x="168" y="55" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="54" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
+                            <PartText x="167" y="56" width="104" height="31"><Text align="CENTER" verticalAlign="CENTER"><Font family="notosanskr_bold" size="32" weight="BOLD" color="#FFFFFF"><Template><![CDATA[%.0f°C]]><Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font></Text></PartText>
                             <PartText x="167" y="55" width="104" height="31">
                                 <Text align="CENTER" verticalAlign="CENTER">
                                     <Font family="notosanskr_bold" size="32" weight="BOLD" color="#26C6DA">
