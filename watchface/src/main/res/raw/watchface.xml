@@ -210,7 +210,7 @@
 
         <!-- 달의 위상 라벨(2글자 세로쌓기), MOON_PHASE_TYPE(0~7) 8단계 텍스트 매핑.
              달 아이콘(x301,y61,50x50) 왼쪽, 글자당 25px 배분(중심 x286). AOD에선 숨김(5-1) -->
-        <Group name="moon_phase_label" x="271" y="61" width="30" height="50">
+        <Group name="moon_phase_label" x="271" y="58" width="30" height="50">
             <Variant mode="AMBIENT" target="alpha" value="0" />
             <Condition>
                 <Expressions>
