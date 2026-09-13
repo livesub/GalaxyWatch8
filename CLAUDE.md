@@ -1,8 +1,8 @@
 # 갤럭시 워치8 클래식 워치페이스 제작 규칙 (CLAUDE.md)
 
-⚠️ 문제 생기면 이 커밋으로 원복(최신 안정 기준점, 2026-09-08): 커밋 0299380 (git reset --hard 0299380)
-※ 0299380 = 달의 위상 골드톤/온도 3단계 색상(파랑·초록·오렌지) 분기/orphan 이미지(moon_nc, moon_qgf) 삭제까지 반영, 실기기 확인 완료 시점
-※ 이전 기준점(v7, 커밋 8d30b2b/태그 dev-final-stable-v7, 2026-08-31)은 폐기
+⚠️ 문제 생기면 이 커밋으로 원복(최신 안정 기준점, 2026-09-13): 커밋 8e23f5a (git reset --hard 8e23f5a)
+※ 8e23f5a = 하단 알약 3종(배터리/걸음수/심박) 폰트 크기 통일(isAutoSize 23/minSize9)+죽은 Outline 속성 제거, allowBackup="false" 명시, 일출/일몰 시각 텍스트 잘림 수정(SLOT_SUNRISE 82→94 확장) 전부 반영, 실기기 확인 완료 시점
+※ 이전 기준점(0299380, 2026-09-08)은 폐기
 
 ## 1. 프로젝트 개요
 - 목적: 갤럭시 워치8 클래식 개인용 워치페이스, VSCode + Claude Code CLI 바이브코딩으로 제작
@@ -116,7 +116,7 @@
 | 온도 값 | 167 | 55 | 104 | 31 | "28°C" |
 | 달의 위상 Group | 285 | 58 | 82 | 57 | TYPE0~7 Condition별 이미지 7종 스위칭(마스크 방식 폐기, 2026-09-06), 내부 아이콘 로컬좌표 x=16,y=3,w=50,h=50 |
 | 달 이름 라벨 | 271 | 58 | 30 | 50 | 세로 2글자(오전/오후 방식), MOON_PHASE_TYPE 0~7→신월/초승/상현/차다/보름/지다/하현/그믐 (y=58, 달의 위상 Group과 정렬 맞춤, 2026-09-08) |
-| 일출/일몰 시각 | 71 | 89 | 82 | 26 | SLOT_SUNRISE 값(COMPLICATION.TEXT, 통합) |
+| 일출/일몰 시각 | 71 | 58 | 94 | 57 | SLOT_SUNRISE 값(COMPLICATION.TEXT, 통합). ComplicationSlot/BoundingBox 자체가 94x57(2026-09-13 82→94 확장), 내부 PartText는 x=0,y=31,w=94,h=26(슬롯 로컬좌표) |
 | 날씨 코멘트 | 167 | 93 | 104 | 18 | 최대 6자 |
 | 날씨 아이콘 | 0 | 121 | 438 | 105 | 가로 전체폭 중앙정렬, 실제 아이콘은 정사각비율 유지 |
 | 콤플리케이션(차량) | 70 | 130 | 52 | 52 | SLOT_TOP_LEFT |
@@ -145,40 +145,38 @@
 | 최고/최저 기온 | 15 | notosanskr_bold/BOLD |
 | 날씨 코멘트 | 17 | notosanskr_bold/BOLD |
 | 일출/일몰 라벨 | 16 | notosanskr_bold/BOLD |
-| 일출/일몰 시각 | 21 | notosanskr_bold/BOLD |
+| 일출/일몰 시각 | 21, isAutoSize="TRUE" minSize="14"(2026-09-13 추가, 8자 극단값 대비 안전장치) | notosanskr_bold/BOLD |
 | 달 이름 라벨 | 23 | notosanskr_bold/BOLD, 흰색 단독, 아웃라인 없음(2026-09-08 최종) |
 | 강수확률 라벨 | 11 | notosanskr_bold/BOLD |
 | 강수확률 값 | 17 | notosanskr_bold/BOLD |
 | 알약 라벨(3개 공통) | (2026-08-31 삭제 확정, 엘리먼트 자체 제거) | - |
-| 알약 값 - 배터리 | 24 (고정, isAutoSize/minSize 제거 — 2026-08-31) | notosanskr_bold/BOLD |
-| 알약 값 - 걸음수 | 자릿수별 분기(23/19/14/9) — 5-4 참조 | notosanskr_bold/BOLD |
-| 알약 값 - 심박수 | 23 (고정, isAutoSize/minSize 제거 — 2026-08-31) | notosanskr_bold/BOLD |
+| 알약 값 - 배터리 | 23, isAutoSize="TRUE" minSize="9" (2026-09-13: 24 고정에서 변경, 3개 알약 크기 통일) | notosanskr_bold/BOLD |
+| 알약 값 - 걸음수 | 23, isAutoSize="TRUE" minSize="9" (5-4 참조) | notosanskr_bold/BOLD |
+| 알약 값 - 심박수 | 23, isAutoSize="TRUE" minSize="9" (2026-09-13: 고정에서 변경, 3개 알약 크기 통일) | notosanskr_bold/BOLD |
 | 알림 개수 | 15 | notosanskr_bold/BOLD |
 | 콤플리케이션 "+" 플레이스홀더 | 28 | notosanskr_bold/BOLD |
 | 워치이름 | 16 | **notosanskr_regular/NORMAL**(유일한 regular 사용처, 나머지 전부 bold) |
 
 - **폰트 family 규칙**: watchface.xml 전체에서 `family="notosanskr_regular"`는 워치이름 1곳(983행)에만 쓰이고, 그 외 모든 텍스트(약 59곳)는 `family="notosanskr_bold"`, `weight="BOLD"` — 새로 만들 때도 이 원칙 그대로(워치이름만 regular, 나머지 전부 bold)
 
-### 5-4. 걸음수 알약 값 오토핏 자릿수 분기 (2026-08-31 재확정 — 배터리/심박 고정사이즈와 시작값 통일)
-| 자릿수 구간 | size |
-|---|---|
-| 1~2자리 | 23 |
-| 3자리 | 19 |
-| 4자리 | 14 |
-| 5~6자리(최대 999999) | 9, `isAutoSize="TRUE"` + `minSize="9"` (이 구간만 안전장치 유지) |
-
-- 배터리(size=24)·심박수(size=23)는 2026-08-31부로 `isAutoSize`/`minSize` 제거, 완전 고정값으로 전환(에뮬레이터/실기기 렌더 차이 회피 목적, 9-1 참조) — 걸음수만 5~6자리 극단값 대비 안전장치 유지
+### 5-4. 걸음수 알약 값 오토핏 (2026-09-13 재확정 — Condition 4분기 구조 폐기, PartText 1개 통합)
+- **기존 방식 폐기**: 자릿수별 Condition/Compare 4분기(size 23/21/17/isAutoSize9, PartText 서브트리 분리) — 실기기에서 분기 전환 시 폰트 재계산이 지연되는 버그 발견(자릿수 바뀌어도 이전 크기로 고착, 워치 재부팅해야 정상 크기로 복귀). CLAUDE.md 문서상 값(23/19/14/9)과 실제 코드값(23/21/17/9)이 불일치했던 이력도 있었음(원인 불명 변경 이력)
+- **현재 방식**: PartText 1개로 통합, `isAutoSize="TRUE"` + `minSize="9"`, 시작 size=23, 박스(x=208,y=347,w=45,h=30) 안에서 연속 자동축소 — 분기 구조 자체를 없애 재계산 지연 버그 원천 차단
+- 실기기 1/12/123/1234/12345/999999 순차 테스트 완료: 전 구간 오버플로/재부팅 없이 즉시 반영 확인(커밋 a6c9c64)
+- **세로정렬 버그 추가 수정(2026-09-13, 커밋 c8ff906)**: 통합 직후 걸음수만 y=354로 배터리/심박(y=347)보다 7px 아래 렌더되던 문제 발견 — 5-5 문서값 자체가 잘못 박혀있던 게 원인, y=347로 통일해 3개 알약 세로 정렬 맞춤. 2자리 폰트 크기(size=23)도 심박(size23 고정)과 픽셀 측정상 완전 동일(17px) 확인 — isAutoSize 축소 없이 시작값 그대로 렌더됨
+- **3자리 최악값(999) 실기기 확인(2026-09-13)**: 999 하드코딩 테스트 결과 박스(w=45) 안에서 size23 그대로(축소 미발생) 오버플로 없음 확인 — 1~3자리는 사실상 항상 size23으로 렌더되고, isAutoSize는 4자리 이상부터 실제로 개입
+- **2026-09-13 정책 번복**: 배터리·심박수도 걸음수와 동일한 isAutoSize 구조로 통일됨(아래 3개 알약 크기 통일 확정 항목 참조) — 2026-08-31 고정값 정책은 더 이상 유효하지 않음
 
 ### 5-5. 하단 알약 3개 내부 아이콘/값 절대좌표 (2026-09-06 재확정 — 아이콘 3종 26x26 통일 및 이미지 교체)
 | 알약 | 아이콘(PartImage) x,y,w,h | 값(PartText) x,y,w,h |
 |---|---|---|
-| 배터리(외곽 65,340,96,44) | 71,349,26,26 (`icon_battery.png` 신규 교체, 반투명 캡 alpha 보정판) | 102,354,55,30, size=24 고정 |
-| 걸음수(외곽 171,340,96,44) | 177,349,26,26 (`icon_steps.png` 신규 교체) | 208,354,45,30(자릿수 분기 4개 공통, 5-4 참조) |
-| 심박수(외곽 277,340,96,44) | 283,349,26,26 (`icon_heart.png` 신규 교체) | 314,347,55,30, size=23 고정 |
+| 배터리(외곽 65,340,96,44) | 71,349,26,26 (`icon_battery.png` 신규 교체, 반투명 캡 alpha 보정판) | 102,347,55,30, size=23 isAutoSize(2026-09-13 통일, y도 347로 정정) |
+| 걸음수(외곽 171,340,96,44) | 177,349,26,26 (`icon_steps.png` 신규 교체) | 208,347,45,30 (2026-09-13: 기존 문서값 y=354가 오류였음 확인, 배터리/심박과 동일한 y=347로 수정 — 5-4 참조) |
+| 심박수(외곽 277,340,96,44) | 283,349,26,26 (`icon_heart.png` 신규 교체) | 314,347,55,30, size=23 isAutoSize(2026-09-13 통일) |
 
 - **아이콘 3종 26x26 정사각 통일(2026-09-06 확정)**: 기존 개별크기(배터리 16x24/걸음수 18x28/심박 30x30) 폐기. 아이콘 좌측여백 6px 고정 — 알약 stadium 곡률(반지름22) 안전범위 계산 결과 26x26+여백6px는 여유(필요 half-height13 ≤ 안전치15.1) 확보, **28x28+여백4px 시도는 곡률 침범(아이콘 상하단이 알약 밖으로 튀어나옴, 실기기 확인)으로 폐기**
 - 세로 중앙정렬 공식(아이콘y = 362 - 아이콘height/2) 그대로 적용: 349 = 362-13
-- 값(PartText) x/width는 아이콘 크기 변경분만큼 재계산(간격 5px 고정, 배터리·심박 우측여백 4px / 걸음수 우측여백 14px 규칙 기존 유지), y좌표는 변경 없음(354/354/347)
+- 값(PartText) x/width는 아이콘 크기 변경분만큼 재계산(간격 5px 고정, 배터리·심박 우측여백 4px / 걸음수 우측여백 14px 규칙 기존 유지), y좌표는 3개 알약 전부 y=347로 통일(2026-09-13 확정 — 이전 문서값 걸음수 y=354는 오류)
 - 배터리 아이콘은 반투명 유리(캡·얼굴) 영역이 원본 alpha가 낮아 26px로 축소 시 형체가 거의 안 보이는 문제 발견 → 해당 alpha구간(5~150) 픽셀만 alpha 상향+연한 회색으로 재도색한 보정판 적용, 실기기 확인 완료
 
 ### 5-6. 날씨 아이콘 32종 x/y/width 산출 방식
@@ -256,7 +254,7 @@
 | SLOT_MID_RIGHT | 중단 우 원형 | App Shortcut — "음성녹음"도 위와 동일하게 용도 라벨일 뿐, 사전 지정 불가(`isCustomizable` 기본값 true 유지) | 가능 |
 
 ※ App Shortcut 3개 슬롯(차량/AI/음성) 전부 특정 앱 하드코딩 불가능(6-4 원칙과 동일) — 단, 대상 앱이 자체 Wear OS 콤플리케이션 제공자(ComplicationDataSourceService)를 별도로 공개한 경우에 한해 `primaryProvider`로 직접 지정해 기본 자동표시 가능(예: 기아 커넥트가 이를 지원하는지는 미확인, 실기기에서 확인 필요)
-| SLOT_SUNRISE | **좌상단**(일출/일몰 통합 텍스트) | `DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET"` — 공식 Wear OS 시스템 데이터소스 확인됨(Wear OS 4+, `SystemDataSources.DATA_SOURCE_SUNRISE_SUNSET`) | **`isCustomizable="false"`로 잠금 확정** — 라벨은 `WEATHER.IS_DAY` 조건부("일몰"/"일출" 전환), 값은 COMPLICATION.TEXT 그대로(2026-08-30 실기기 검증 완료) |
+| SLOT_SUNRISE | **좌상단**(일출/일몰 통합 텍스트), width 94(2026-09-13 82→94 확장, 아래 텍스트 잘림 버그 참조) | `DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET"` — 공식 Wear OS 시스템 데이터소스 확인됨(Wear OS 4+, `SystemDataSources.DATA_SOURCE_SUNRISE_SUNSET`) | **`isCustomizable="false"`로 잠금 확정** — 라벨은 `WEATHER.IS_DAY` 조건부("일몰"/"일출" 전환), 값은 COMPLICATION.TEXT 그대로(2026-08-30 실기기 검증 완료) |
 
 ※ 우상단(구 SLOT_SUNSET) 자리는 달의 위상 표시로 활용 확정(ComplicationSlot 아닌 직접 데이터 바인딩, 5번-4/9-1 참조)
 
@@ -302,6 +300,7 @@
 - 런처 아이콘(워치페이스 목록 썸네일): 완료 — 22단계로 fast-track 처리됨, `watchface/src/main/res/drawable/preview.png`(실제 워치페이스 캡처, 래스터) + `watch_face_info.xml`의 `<Preview value="@drawable/preview" />` 등록 완료
 - `watch_face_info.xml`의 `<Editable value="true" />` 필수(기본값 false — 없으면 편집화면 진입 불가, 21-16-3 확인)
 - AndroidManifest.xml `android:hasCode="false"` 필수(WFF는 코드 없이 리소스만 포함하는 게 정상)
+- AndroidManifest.xml `<application>`에 `android:allowBackup="false"` 명시(2026-09-13 추가, 커밋 a147bae) — hasCode=false라 실질 백업 데이터 자체는 없지만 베스트프랙티스로 명시
 - watch_face_info.xml 기타 확정값: `<Category value="CATEGORY_EMPTY" />`, `<AvailableInRetail value="false" />`, `<MultipleInstancesAllowed value="false" />`, `<FlavorsSupported value="false" />`
 - release 빌드타입: `isMinifyEnabled=false`, `isShrinkResources=false`
 
@@ -313,7 +312,7 @@
 - **콤플리케이션 개별 탭→앱 선택 피커**: 에뮬레이터(uiautomator)에서는 개별 탭 타겟 노출이 안 돼서 확인 불가(실제 미구현인지 AVD 한계인지 불명확) — 실기기에서 최종 확인 필요(개발_지시서.md 12단계)
 - **실기기 가독성 문제(2026-08-30 발견) → 해결(2026-09-06)**: 하단 알약 3개(워치배터리/걸음수/심박수) 텍스트가 잘 안 보이던 문제 — 아이콘 3종 26x26 통일 확대 + 배터리 캡 alpha 보정으로 개선, 실기기 캡쳐로 확인 완료(5-5 참조)
 - **온도 표시 간헐적 미표시(2026-08-30 발견, 원인 미파악)**: 갑자기 온도가 안 나타나는 현상 관찰됨 — 재현조건/원인 파악 위해 추가 관찰 중, 다음 세션에서 진단 예정.
-- **배터리 지속시간 감소 관찰(2026-09-08 발견, 원인 미확정)**: 기존 약 2일 사용 가능하던 것이 1일반나절 수준으로 감소. 달의 위상 작업과 시기가 겹쳤으나, 같은 날 폰/워치를 둘 다 초기화(재페어링·재설치)한 것이 더 유력한 원인으로 추정(초기화 직후 재동기화 부하는 흔한 현상). XML 레벨 점검(AOD alpha=0 스코핑, 이미지 용량, 죽은 코드) 결과 이상 없음 확인됨(9-1 아님, 본 항목 조사 기록) — dumpsys batterystats로도 이 앱(hasCode=false라 프로세스 없음)에 직접 귀속되는 항목 없어 계량 불가. 며칠 더 관찰 후 정상화 안 되면 이전 커밋으로 되돌려 A/B 비교 예정.
+- **배터리 지속시간 감소 관찰(2026-09-08 발견, 원인 미확정)**: 기존 약 2일 사용 가능하던 것이 1일반나절 수준으로 감소. 달의 위상 작업과 시기가 겹쳤으나, 같은 날 폰/워치를 둘 다 초기화(재페어링·재설치)한 것이 더 유력한 원인으로 추정(초기화 직후 재동기화 부하는 흔한 현상). XML 레벨 점검(AOD alpha=0 스코핑, 이미지 용량, 죽은 코드) 결과 이상 없음 확인됨(9-1 아님, 본 항목 조사 기록) — dumpsys batterystats로도 이 앱(hasCode=false라 프로세스 없음)에 직접 귀속되는 항목 없어 계량 불가. **추가 데이터(2026-09-09)**: 전날 22:30 완충 → 당일 13:43까지 15시간13분 사용, 60% 잔량(40% 소모) — 소모율 약 2.63%/시간, 완충 기준 예상 지속시간 약 38시간(1.6일). 초기화 다음날(day+1)에도 개선 안 되고 동일 수준 유지 중 — "며칠 지나면 정상화" 가설과 다소 배치되므로, 하루 더 관찰 후에도 유지되면 이전 커밋(달의 위상 작업 이전)으로 되돌려 A/B 비교 진행 권장.
 - **날씨 아이콘 계절 불일치 의심(2026-08-31 발견)**: 실기기 여름철 비 오는 날 RAIN(코드6) day 아이콘에 겨울용 니트 비니(beanie)가 씌워진 그림이 표시됨 — `docs/weather_icons.md` 매핑표 확인 결과 day_06_rain_beanie_sad(비니 있음)와 night_06_rain_sad(비니 없음)가 day/night 짝이 안 맞음(SNOW·HEAVY_SNOW 코드의 비니는 겨울 한정이라 문제 없음, RAIN만 이상). **단, 실제 표시된 게 RAIN(6) 정상 렌더인지 UNKNOWN_VALUE(0) 폴백(day_15_rain_beanie_happy, 마찬가지로 비니 있음)인지 육안 구분 불가** — 전날 발견된 온도 간헐 미표시 버그와 동일 원인(WEATHER 데이터소스 간헐 실패→UNKNOWN 폴백)일 가능성 있어, 다음 세션에서 실기기 logcat/dumpsys로 당시 WEATHER.CONDITION 실측값 우선 확인 필요. 확인 후 필요시 day_06 아이콘 재생성(비니 제거)
 
 ## 9-1. 확정 버그/오해 정정 기록 (재발 방지용)
@@ -321,9 +320,11 @@
 - 요일 텍스트 아웃라인: 검정 `#D9000000`, 8방향 ±2px 오프셋 복제 PartText 8개 + 원본 색상 PartText 1개(총 9개 겹침) 구조로 확정(2026-08-30 실기기 검증 완료).
 - **WFF에는 `<Mask>` 요소가 존재하지 않음**: Samsung Watch Face Studio(GUI 도구) 코드랩의 "Mask" 용어는 GUI 전용 추상 개념이며, raw WFF XML엔 대응 태그가 없음. 실제 구현은 같은 `<Group>` 내 자식 요소에 `renderMode="SOURCE"`(원본)/`renderMode="MASK"`(마스크)를 지정하는 방식 — 여러 MASK 요소는 합집합(OR)으로만 결합되고 교집합/차집합은 불가능. **달의 위상은 최초에 사각형 슬라이딩 마스크로 근사 구현했으나(직선 절단 문제), 2026-09-06 이미지 7종 직접 스위칭 방식으로 교체하여 이 마스크 자체를 더 이상 사용하지 않음**(4-1/7 참조).
 - **SUNRISE_SUNSET 시스템 데이터소스는 "다음 해 이벤트 하나"만 제공(일출 전용/일몰 전용으로 나눠 받는 기능 없음)**: Samsung 개발자 공식 답변으로 확인("Sunrise / Sunset tells that it is either when the next sunset will be or the next Sunrise"). 낮(일출~일몰)엔 다음 일몰 시각을, 밤(일몰~다음일출)엔 다음 일출 시각을 자동으로 반환하는 단일 값 구조. **두 슬롯에 각각 넣어 좌우 분리 표시하는 설계는 애초에 불가능** — 처음부터 다시 만들 때는 슬롯 1개(SLOT_SUNRISE)만 만들고 라벨을 `WEATHER.IS_DAY`로 조건부 전환할 것(7-1 참조), 2슬롯 설계 반복 금지.
-- **에뮬레이터와 실기기의 isAutoSize/minSize 텍스트 자동축소 렌더링 결과가 다를 수 있음(2026-08-31 확인)**: 폰트는 notosanskr_bold/regular.ttf가 APK에 직접 번들링돼 두 환경에서 완전히 동일한 파일 사용 확인됨(폰트 자체는 원인 아님) — 원인은 OS/WFF 렌더링 엔진 버전 차이(에뮬레이터: Android14/SDK34 AOSP 순정 Wear, 실기기: Android17/SDK37 One UI Watch9)로 추정, isAutoSize 축소 로직 구현이 런타임마다 다르게 동작. **결론: isAutoSize/minSize가 걸린 텍스트 크기는 에뮬레이터만 보고 확정하지 말고 반드시 실기기로 최종 확인할 것**, 가능하면 크기가 중요한 요소는 isAutoSize 대신 고정 size로 박아서 런타임 편차 자체를 없앨 것(예: 하단 알약 배터리 값 텍스트, 5-3 참조).
+- **에뮬레이터와 실기기의 isAutoSize/minSize 텍스트 자동축소 렌더링 결과가 다를 수 있음(2026-08-31 확인)**: 폰트는 notosanskr_bold/regular.ttf가 APK에 직접 번들링돼 두 환경에서 완전히 동일한 파일 사용 확인됨(폰트 자체는 원인 아님) — 원인은 OS/WFF 렌더링 엔진 버전 차이(에뮬레이터: Android14/SDK34 AOSP 순정 Wear, 실기기: Android17/SDK37 One UI Watch9)로 추정, isAutoSize 축소 로직 구현이 런타임마다 다르게 동작. **결론: isAutoSize/minSize가 걸린 텍스트 크기는 에뮬레이터만 보고 확정하지 말고 반드시 실기기로 최종 확인할 것**. (2026-09-13: 하단 알약 3개는 오히려 반대로 고정size→isAutoSize 통일로 전환했으며, 실기기 픽셀 실측으로 정상범위 동일크기/초과범위 자동축소를 확인한 뒤 확정함 — 5-4 참조. 즉 isAutoSize 자체를 피하기보다 "실기기 실측 확인"이 핵심 원칙)
 
 - **재미나이 생성 이미지 우측하단(또는 임의 위치) 반짝이(별) 아이콘은 재미나이 자체 워터마크(생성 표시)임(2026-09-06 확인)**: 프롬프트로 "빼달라"고 요청해도 반영 안 됨 — 재발 요청 금지, 후처리(크롭/인페인팅)로 직접 제거할 것.
+- **ComplicationSlot 내부 텍스트는 PartText width가 아니라 ComplicationSlot/BoundingBox 자체 폭에서 클리핑됨(2026-09-13 발견·해결)**: 일몰 시각값("오후 6:43")이 잘려 보이는 문제에서, 내부 PartText width만 82→90/150으로 늘려도 해결 안 되고 오히려 150 테스트에선 텍스트 전체가 사라짐(정렬 기준점이 슬롯 폭 밖으로 밀려남) — 원인은 시스템이 ComplicationSlot의 `<BoundingBox>` 폭으로 실제 렌더를 강제 클립하기 때문. **ComplicationSlot 안에 들어간 PartText/Group의 크기·위치를 조정할 땐 슬롯 자체와 BoundingBox width/height를 반드시 함께 바꿀 것**, 내부 요소만 키우는 시도는 무효(SLOT_SUNRISE 82→94 확장으로 해결, 커밋 8e23f5a).
+- **걸음수 알약 폰트 크기 고착 버그(2026-09-13 발견·해결)**: 자릿수별 Condition/Compare 분기(서로 다른 PartText 서브트리 전환) 구조에서, 실기기가 분기 전환 시 폰트 재계산을 지연시켜 재부팅 전까지 이전 자릿수 크기로 고착되는 현상 확인. **분기 구조를 쓰는 요소에서만 발생, 고정size 요소(배터리/심박)는 무관** — 향후 유사 자동크기 요소는 Condition 분기 대신 PartText 1개+`isAutoSize`연속축소 방식을 우선 고려할 것(5-4 참조).
 
 ## 10. 작업 방식 규칙 (Claude Code CLI 대상)
 - 요청 범위 외 리팩토링 금지
