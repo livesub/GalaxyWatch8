@@ -1120,53 +1120,14 @@
         <PartImage x="177" y="349" width="26" height="26">
             <Image resource="icon_steps" />
         </PartImage>
-        <Condition>
-            <Expressions>
-                <Expression name="steps_s"><![CDATA[[STEP_COUNT] < 100]]></Expression>
-                <Expression name="steps_m"><![CDATA[[STEP_COUNT] < 1000]]></Expression>
-                <Expression name="steps_l"><![CDATA[[STEP_COUNT] < 10000]]></Expression>
-            </Expressions>
-            <Compare expression="steps_s">
-                <PartText x="196" y="347" width="57" height="30">
-                    <Text align="END" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="23" weight="BOLD" color="#C9F7DC">
-                            <Outline color="#B3000000" width="1.2" />
-                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Compare>
-            <Compare expression="steps_m">
-                <PartText x="196" y="347" width="57" height="30">
-                    <Text align="END" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="21" weight="BOLD" color="#C9F7DC">
-                            <Outline color="#B3000000" width="1.2" />
-                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Compare>
-            <Compare expression="steps_l">
-                <PartText x="196" y="347" width="57" height="30">
-                    <Text align="END" verticalAlign="CENTER">
-                        <Font family="notosanskr_bold" size="17" weight="BOLD" color="#C9F7DC">
-                            <Outline color="#B3000000" width="1.2" />
-                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Compare>
-            <Default>
-                <PartText x="196" y="347" width="57" height="30">
-                    <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
-                        <Font family="notosanskr_bold" size="9" weight="BOLD" color="#C9F7DC" minSize="9">
-                            <Outline color="#B3000000" width="1.2" />
-                            <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
-                        </Font>
-                    </Text>
-                </PartText>
-            </Default>
-        </Condition>
+        <PartText x="208" y="354" width="45" height="30">
+            <Text align="END" verticalAlign="CENTER" isAutoSize="TRUE">
+                <Font family="notosanskr_bold" size="23" weight="BOLD" color="#C9F7DC" minSize="9">
+                    <Outline color="#B3000000" width="1.2" />
+                    <Template><![CDATA[%d]]><Parameter expression="[STEP_COUNT]" /></Template>
+                </Font>
+            </Text>
+        </PartText>
 
         <!-- 알약3: 심박수(96px, x277), 값 가운데정렬. 스트레스 지수는 WFF SourceType 미지원 확인되어 제외(CLAUDE.md 7-2) -->
         <PartDraw x="277" y="340" width="96" height="44">
