@@ -8,7 +8,8 @@
     <application
         android:label="@string/watch_face_name"
         android:icon="@drawable/preview"
-        android:hasCode="false">
+        android:hasCode="false"
+        android:allowBackup="false">
 
         <meta-data
             android:name="com.google.android.wearable.standalone"
